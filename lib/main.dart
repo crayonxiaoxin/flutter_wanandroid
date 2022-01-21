@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/net/request/home_article_request.dart';
 import 'package:lx_base/lx_state.dart';
+import 'package:lx_base/utils/run_and_catch.dart';
+import 'package:lx_base/widget/immersive_app_bar.dart';
 import 'package:lx_cache/lx_cache.dart';
 import 'package:lx_net/lx_net.dart';
 
 void main() {
-  runApp(const MyApp());
+  runSafety(const MyApp());
 }
 
 test() async {
@@ -66,9 +68,15 @@ class _MyHomePageState extends LxState<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: const ImmersiveAppBar(
+        backgroundColor: Colors.blue,
+        elevation: 2,
+        height: 0,
+        child: Text(
+          "data",
+        ),
       ),
       body: Center(
         child: Column(
