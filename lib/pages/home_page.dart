@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wan_android/main.dart';
 import 'package:flutter_wan_android/net/request/home_article_request.dart';
+import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_base/lx_state.dart';
+import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 import 'package:lx_cache/lx_cache.dart';
 import 'package:lx_net/lx_net.dart';
@@ -33,10 +34,13 @@ class _MyHomePageState extends LxState<MyHomePage> {
     // setState(() {
     //   _counter++;
     // });
-    MyRouterDelegate.of(context).push(MyRoutePath.details(), notify: true);
-    Future.delayed(Duration(seconds: 2), () {
-      MyRouterDelegate.of(context).push(MyRoutePath.details(), notify: true);
+    MyRouterDelegate.of(context).push(MyRoutePath.details(),
+        onPopResult: (res) {
+      toast(res);
     });
+    // Future.delayed(Duration(seconds: 2), () {
+    //   MyRouterDelegate.of(context).push(MyRoutePath.details(), notify: true);
+    // });
   }
 
   test() async {
