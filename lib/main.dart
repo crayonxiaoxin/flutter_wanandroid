@@ -1,102 +1,161 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wan_android/net/request/home_article_request.dart';
-import 'package:lx_base/lx_state.dart';
+import 'package:flutter_wan_android/pages/detail_page.dart';
+import 'package:flutter_wan_android/pages/home_page.dart';
 import 'package:lx_base/utils/run_and_catch.dart';
-import 'package:lx_base/widget/immersive_app_bar.dart';
-import 'package:lx_cache/lx_cache.dart';
-import 'package:lx_net/lx_net.dart';
 
 void main() {
-  runSafety(const MyApp());
-}
-
-test() async {
-  var request = HomeArticleRequest();
-  request.pathParams = "0/json";
-  try {
-    var response = await LxNet.instance.request(request);
-    print("main test $response");
-    print("main test ${response['data']}");
-  } catch (e) {
-    print("main test $e");
-  }
+  runSafety(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  MyRouterDelegate _delegate = MyRouterDelegate();
+  MyRouteInfoParser _routeInfoParser = MyRouteInfoParser();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // return MaterialApp.router(
+    //   title: 'Flutter Demo',
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   routerDelegate: _delegate,
+    //   routeInformationParser: _routeInfoParser,
+    // );
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Router(
+        routerDelegate: _delegate,
+        routeInformationParser: _routeInfoParser,
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class MyRoutePath {
+  final String location;
 
-  final String title;
+  MyRoutePath(this.location);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  MyRoutePath.home() : location = "/";
+
+  bool get isHome => location == "/";
+
+  MyRoutePath.details() : location = "/details";
+
+  bool get isDetails => location == "/details";
 }
 
-class _MyHomePageState extends LxState<MyHomePage> {
-  int _counter = 0;
+class MyRouterDelegate extends RouterDelegate<MyRoutePath>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<MyRoutePath> {
+  List<MaterialPage> _stack = [];
+  List<String> _stackPath = [];
+  MyRoutePath _current = MyRoutePath.home();
 
-  @override
-  void initState() {
-    super.initState();
-    LxCache.preInit();
+  static MyRouterDelegate of(BuildContext context) {
+    var delegate = Router.maybeOf(context)?.routerDelegate;
+    assert(delegate is MyRouterDelegate, "delegate must be match");
+    return delegate as MyRouterDelegate;
   }
 
-  void _incrementCounter() {
-    test();
-    LxCache.instance.setString("hello", "value");
-    String? value = LxCache.instance.get("hello");
-    print("lx cache value: $value");
-    setState(() {
-      _counter++;
-    });
+  void push(MyRoutePath path, {bool notify = true}) {
+    // todo: 这里有问题
+    _current = path;
+    var index = _stackPath.indexOf(path.location);
+    if (index != -1) {
+      _stack.sublist(0, index);
+      _stackPath.sublist(0, index);
+      print("path=>exists $index,${_stackPath.length}");
+    }
+    if (_current.isHome) {
+      print("path=>ishome");
+      _stack.clear();
+      _stackPath.clear();
+    }
+    _stack.add(_buildPage(path));
+    _stackPath.add(path.location);
+    print("path=>${path.location},_stack=>${_stack.length}");
+    if (notify) {
+      print("notify");
+      notifyListeners();
+    }
+  }
+
+  void pop() {
+    if (_stack.isNotEmpty) {
+      _stack.removeLast();
+      _stackPath.removeLast();
+      notifyListeners();
+    }
+  }
+
+  MaterialPage _buildPage(MyRoutePath path) {
+    var page;
+    if (path.isHome) {
+      page = MyHomePage(title: "title");
+    } else if (path.isDetails) {
+      page = DetailPage();
+    } else {
+      page = Container();
+    }
+    print("page=> $page");
+    return _wrapPage(page);
+  }
+
+  MaterialPage _wrapPage(Widget page) {
+    return MaterialPage(child: page, key: ValueKey(page.hashCode));
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return Scaffold(
-      appBar: const ImmersiveAppBar(
-        backgroundColor: Colors.blue,
-        elevation: 2,
-        height: 0,
-        child: Text(
-          "data",
+    if (_stack.isEmpty) {
+      print("build empty ${_stack.length}");
+      push(_current, notify: false);
+    }
+    return WillPopScope(
+        child: Navigator(
+          key: navigatorKey,
+          // 直接赋值 _stack 的话是不会触发刷新的，结构成新的值才会刷新
+          pages: [..._stack],
+          onPopPage: (Route<dynamic> route, dynamic result) {
+            var didPop = route.didPop(result);
+            print("android back press didPop => $didPop");
+            if (didPop) {
+              _stack.removeLast();
+              return true;
+            } else {
+              return false;
+            }
+          },
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        onWillPop: () async {
+          var maybePop = await navigatorKey?.currentState?.maybePop();
+          print("android back press maybePop => $maybePop");
+          return !(maybePop ?? false);
+        });
+  }
+
+  @override
+  GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Future<void> setNewRoutePath(MyRoutePath configuration) async {}
+}
+
+class MyRouteInfoParser extends RouteInformationParser<MyRoutePath> {
+  @override
+  Future<MyRoutePath> parseRouteInformation(RouteInformation routeInformation) {
+    return SynchronousFuture(MyRoutePath(routeInformation.location ?? "/"));
+  }
+
+  @override
+  RouteInformation restoreRouteInformation(MyRoutePath configuration) {
+    return RouteInformation(location: configuration.location);
   }
 }
