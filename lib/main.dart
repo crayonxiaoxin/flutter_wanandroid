@@ -11,12 +11,13 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  MyRouterDelegate _delegate = MyRouterDelegate();
-  MyRouteInfoParser _routeInfoParser = MyRouteInfoParser();
+  final MyRouterDelegate _delegate = MyRouterDelegate();
+  final MyRouteInfoParser _routeInfoParser = MyRouteInfoParser();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    /// 不知道原因，使用 MaterialApp.router 会导致 WillPopScope 无效
     // return MaterialApp.router(
     //   title: 'Flutter Demo',
     //   theme: ThemeData(
@@ -55,7 +56,6 @@ class MyRoutePath {
 class MyRouterDelegate extends RouterDelegate<MyRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<MyRoutePath> {
   List<MaterialPage> _stack = [];
-  List<String> _stackPath = [];
   MyRoutePath _current = MyRoutePath.home();
 
   static MyRouterDelegate of(BuildContext context) {
@@ -67,22 +67,16 @@ class MyRouterDelegate extends RouterDelegate<MyRoutePath>
   void push(MyRoutePath path, {bool notify = true}) {
     // todo: 这里有问题
     _current = path;
-    var index = _stackPath.indexOf(path.location);
+    var index = _getPathIndex(path);
     if (index != -1) {
-      _stack.sublist(0, index);
-      _stackPath.sublist(0, index);
-      print("path=>exists $index,${_stackPath.length}");
+      // 出栈至当前 page，不保留
+      _stack = _stack.sublist(0, index);
     }
     if (_current.isHome) {
-      print("path=>ishome");
       _stack.clear();
-      _stackPath.clear();
     }
     _stack.add(_buildPage(path));
-    _stackPath.add(path.location);
-    print("path=>${path.location},_stack=>${_stack.length}");
     if (notify) {
-      print("notify");
       notifyListeners();
     }
   }
@@ -90,36 +84,49 @@ class MyRouterDelegate extends RouterDelegate<MyRoutePath>
   void pop() {
     if (_stack.isNotEmpty) {
       _stack.removeLast();
-      _stackPath.removeLast();
       notifyListeners();
     }
   }
 
+  // 获取页面对应的 路由下标
+  _getPathIndex(MyRoutePath path) {
+    for (var i = 0; i < _stack.length; i++) {
+      if (_stack[i].restorationId == path.location) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /// 构建页面
   MaterialPage _buildPage(MyRoutePath path) {
     var page;
     if (path.isHome) {
-      page = MyHomePage(title: "title");
+      page = const MyHomePage(title: "title");
     } else if (path.isDetails) {
-      page = DetailPage();
+      page = const DetailPage();
     } else {
       page = Container();
     }
     print("page=> $page");
-    return _wrapPage(page);
+    return _wrapPage(page, path.location);
   }
 
-  MaterialPage _wrapPage(Widget page) {
-    return MaterialPage(child: page, key: ValueKey(page.hashCode));
+  MaterialPage _wrapPage(Widget page, String path) {
+    // restorationId 暂时用作页面唯一识别码
+    return MaterialPage(
+        child: page, key: ValueKey(page.hashCode), restorationId: path);
   }
 
   @override
   Widget build(BuildContext context) {
     if (_stack.isEmpty) {
-      print("build empty ${_stack.length}");
+      // 构建首页
       push(_current, notify: false);
     }
     return WillPopScope(
         child: Navigator(
+          // 此处需设置 key，才能在 Navigator 之外的地方调用
           key: navigatorKey,
           // 直接赋值 _stack 的话是不会触发刷新的，结构成新的值才会刷新
           pages: [..._stack],
@@ -137,6 +144,7 @@ class MyRouterDelegate extends RouterDelegate<MyRoutePath>
         onWillPop: () async {
           var maybePop = await navigatorKey?.currentState?.maybePop();
           print("android back press maybePop => $maybePop");
+          // 拦截物理返回键，当 Navigator 处理完成的时候才交由系统处理
           return !(maybePop ?? false);
         });
   }
