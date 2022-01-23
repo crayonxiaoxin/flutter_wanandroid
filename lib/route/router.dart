@@ -19,12 +19,14 @@ class MyRoutePath {
 }
 
 /// 构建页面
-MaterialPage _buildPage(MyRoutePath path) {
+MaterialPage _buildPage(MyRoutePath path, args) {
   var page;
   if (path.isHome) {
     page = const MyHomePage(title: "title");
   } else if (path.isDetails) {
-    page = const DetailPage();
+    page = DetailPage(
+      model: args,
+    );
   } else {
     page = Container();
   }
@@ -46,7 +48,8 @@ class MyRouterDelegate extends RouterDelegate<MyRoutePath>
   }
 
   // 入栈
-  void push(MyRoutePath path, {bool notify = true, OnPopResult? onPopResult}) {
+  void push(MyRoutePath path,
+      {dynamic args, bool notify = true, OnPopResult? onPopResult}) {
     _current = path;
     var index = _getPathIndex(_stack, path);
     if (index != -1) {
@@ -56,7 +59,7 @@ class MyRouterDelegate extends RouterDelegate<MyRoutePath>
     if (_current.isHome) {
       _stack.clear();
     }
-    _stack.add(_buildPage(path));
+    _stack.add(_buildPage(path, args));
     if (onPopResult != null) {
       _resultListeners[path.location] = onPopResult;
     }

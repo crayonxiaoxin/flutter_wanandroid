@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_base/utils/run_and_catch.dart';
+import 'package:lx_cache/lx_cache.dart';
 
 void main() {
   runSafety(MyApp());
@@ -24,15 +25,28 @@ class MyApp extends StatelessWidget {
     //   routerDelegate: _delegate,
     //   routeInformationParser: _routeInfoParser,
     // );
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Router(
-        routerDelegate: _delegate,
-        routeInformationParser: _routeInfoParser,
-      ),
+    return FutureBuilder(
+      future: LxCache.preInit(),
+      builder: (context, snapshot) {
+        var widget = snapshot.connectionState == ConnectionState.done
+            ? Router(
+                routerDelegate: _delegate,
+                routeInformationParser: _routeInfoParser,
+              )
+            : const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(), // 显示 loading
+                ),
+              );
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: widget,
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

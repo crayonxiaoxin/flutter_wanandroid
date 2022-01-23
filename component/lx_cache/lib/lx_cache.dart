@@ -7,7 +7,7 @@ class LxCache {
   LxCache._pre(this._sharedPreferences);
 
   /// 预初始化，防止 get 时未初始化完成
-  static preInit() async {
+  static Future preInit() async {
     _instance ??= LxCache._pre(await SharedPreferences.getInstance());
     return _instance!;
   }
