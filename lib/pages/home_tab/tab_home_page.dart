@@ -59,8 +59,8 @@ class _TabHomePageState
       });
 
   @override
-  Future<HomeArticleEntity> getData(int pageIndex) async {
-    return await HomeDao.getArticles(page: pageIndex);
+  Future<HomeArticleEntity> getData(int pageIndex) {
+    return HomeDao.getArticles(page: pageIndex);
   }
 
   @override
