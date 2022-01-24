@@ -6,6 +6,7 @@
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/model/home_top_article_entity.dart';
+import 'package:flutter_wan_android/model/hotkey_entity.dart';
 import 'package:flutter_wan_android/model/navi_entity.dart';
 import 'package:flutter_wan_android/model/tree_entity.dart';
 
@@ -98,6 +99,12 @@ class JsonConvert {
     if (type == (HomeTopArticleEntity).toString()) {
       return HomeTopArticleEntity.fromJson(json) as M;
     }
+    if (type == (HotkeyEntity).toString()) {
+      return HotkeyEntity.fromJson(json) as M;
+    }
+    if (type == (HotkeyData).toString()) {
+      return HotkeyData.fromJson(json) as M;
+    }
     if (type == (NaviEntity).toString()) {
       return NaviEntity.fromJson(json) as M;
     }
@@ -150,6 +157,13 @@ class JsonConvert {
       return data
           .map<HomeTopArticleEntity>((e) => HomeTopArticleEntity.fromJson(e))
           .toList() as M;
+    }
+    if (<HotkeyEntity>[] is M) {
+      return data.map<HotkeyEntity>((e) => HotkeyEntity.fromJson(e)).toList()
+          as M;
+    }
+    if (<HotkeyData>[] is M) {
+      return data.map<HotkeyData>((e) => HotkeyData.fromJson(e)).toList() as M;
     }
     if (<NaviEntity>[] is M) {
       return data.map<NaviEntity>((e) => NaviEntity.fromJson(e)).toList() as M;

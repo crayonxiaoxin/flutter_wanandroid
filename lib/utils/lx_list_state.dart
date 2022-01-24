@@ -16,7 +16,11 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
   // 是否允许加载更多
   get enablePullUp => true;
 
+  // 使用这个不能使用 setState
   PreferredSizeWidget? get appBar => null;
+
+  // 使用这个可以使用 setState
+  PreferredSizeWidget? buildAppBar(BuildContext context) => null;
 
   // 刷新时，是否清空初始数据
   bool get isLoadInitClear => true;
@@ -30,6 +34,7 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     var widget = SmartRefresher(
       controller: _refreshController,
       onLoading: onLoading,
@@ -46,9 +51,10 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
       enablePullUp: enablePullUp,
       child: child,
     );
-    return appBar != null
+    var realAppBar = buildAppBar(context) ?? appBar;
+    return realAppBar != null
         ? Scaffold(
-            appBar: appBar,
+            appBar: realAppBar,
             extendBodyBehindAppBar: extendBodyBehindAppBar,
             body: widget,
           )

@@ -18,6 +18,7 @@ class ImmersiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   final ShapeBorder? shape;
   final Gradient? gradient;
   final Widget? child;
+  final ImmersiveAppBarBuilder? builder;
 
   const ImmersiveAppBar({
     Key? key,
@@ -31,6 +32,7 @@ class ImmersiveAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.gradient,
     this.shape,
     this.child,
+    this.builder,
   }) : super(key: key);
 
   @override
@@ -57,7 +59,7 @@ class ImmersiveAppBar extends StatelessWidget implements PreferredSizeWidget {
             : SystemUiOverlayStyle.light.copyWith(statusBarColor: color),
         flexibleSpace: Padding(
           padding: EdgeInsets.only(top: top),
-          child: child,
+          child: builder?.call(context) ?? child,
         ),
       ),
     );
@@ -66,3 +68,5 @@ class ImmersiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size(Adaptive.screenWidth(), height);
 }
+
+typedef ImmersiveAppBarBuilder = Widget Function(BuildContext context);

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
+import 'package:flutter_wan_android/route/router.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
 import 'package:flutter_wan_android/widgets/article_item_card.dart';
 import 'package:flutter_wan_android/widgets/home_banner.dart';
-import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/adaptive_container.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
@@ -52,34 +52,36 @@ class _TabHomePageState
       colors: [Colors.blueAccent, Colors.lightBlueAccent],
     ),
     elevation: 2.0,
-    child: Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Stack(
-        children: [
-          const Center(
-            child: Text(
-              "玩安卓",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Positioned(
-            child: InkWell(
-              onTap: () {
-                toast("开发中。。。");
-              },
-              child: const Icon(
-                Icons.search,
-                color: Colors.white,
+    builder: (context) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Stack(
+          children: [
+            const Center(
+              child: Text(
+                "玩安卓",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
-            right: 0,
-            top: 0,
-            bottom: 0,
-          )
-        ],
-      ),
-    ),
+            Positioned(
+              child: InkWell(
+                onTap: () {
+                  MyRouterDelegate.of(context).push(MyRoutePath.hotkey());
+                },
+                child: const Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+              ),
+              right: 0,
+              top: 0,
+              bottom: 0,
+            )
+          ],
+        ),
+      );
+    },
   );
 
   @override

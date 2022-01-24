@@ -16,7 +16,6 @@ class HomeDao {
     if (cid != null) {
       // 体系下的文章
       request.addParam("cid", cid);
-      print("cid=$cid");
     }
     request.addParam("page_size", pageSize);
     var response = await LxNet.instance.request(request);

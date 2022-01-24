@@ -1,5 +1,6 @@
 library lx_net;
 
+import 'package:flutter/foundation.dart';
 import 'package:lx_net/request/lx_base_request.dart';
 
 import 'core/dio_adapter.dart';
@@ -53,7 +54,9 @@ class LxNet {
   }
 
   Future<LxResponse> send(LxBaseRequest request) {
-    print("lx_net: ${request.params}");
+    if (kDebugMode) {
+      print("lx_net: ${request.params}");
+    }
     _netAdapter ??= DioAdapter();
     return _netAdapter!.send(request);
   }

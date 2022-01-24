@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/lx_state.dart';
+import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -35,6 +37,15 @@ class _DetailPageState extends LxState<DetailPage> {
           return false;
         },
         child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              FlutterClipboard.copy(
+                      "${widget.model?.title}:\n${widget.model?.url}")
+                  .then((value) => toast("已将链接复制至剪贴板"));
+            },
+            child: const Icon(Icons.share),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           appBar: ImmersiveAppBar(
             gradient: const LinearGradient(
               colors: [Colors.blueAccent, Colors.lightBlueAccent],

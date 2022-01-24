@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_home_page.dart';
+import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_qa_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_sys_page.dart';
 import 'package:lx_base/lx_state.dart';
@@ -50,13 +51,11 @@ class _MyHomePageState extends LxState<MyHomePage> {
             _currentIndex = index;
           });
         },
-        children: [
-          const TabHomePage(),
-          const TabQaPage(),
-          const TabSysPage(),
-          Container(
-            child: Text("444"),
-          ),
+        children: const [
+          TabHomePage(),
+          TabQaPage(),
+          TabSysPage(),
+          ProfilePage()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

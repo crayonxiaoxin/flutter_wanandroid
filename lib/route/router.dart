@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/pages/detail_page.dart';
 import 'package:flutter_wan_android/pages/home_page.dart';
+import 'package:flutter_wan_android/pages/hotkey_page.dart';
+import 'package:flutter_wan_android/pages/query_page.dart';
 import 'package:flutter_wan_android/pages/tree_page.dart';
 
 /// 路由列表
@@ -22,6 +24,14 @@ class MyRoutePath {
   MyRoutePath.trees({this.extra = ""}) : location = "/trees/$extra";
 
   bool get isTree => location.contains("/trees/");
+
+  MyRoutePath.query() : location = "/query";
+
+  bool get isQuery => location == "/query";
+
+  MyRoutePath.hotkey() : location = "/hotkey";
+
+  bool get isHotkey => location == "/hotkey";
 }
 
 /// 构建页面
@@ -38,6 +48,10 @@ MaterialPage _buildPage(MyRoutePath path, args) {
       treeData: args,
       initialIndex: path.extra,
     );
+  } else if (path.isQuery) {
+    page = QueryPage(initKeyword: args);
+  } else if (path.isHotkey) {
+    page = const HotkeyPage();
   } else {
     page = Container();
   }
