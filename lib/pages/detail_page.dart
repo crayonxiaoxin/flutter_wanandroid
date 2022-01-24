@@ -18,7 +18,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends LxState<DetailPage> {
-  bool loading = false;
+  bool loading = true;
 
   @override
   void initState() {
@@ -36,8 +36,11 @@ class _DetailPageState extends LxState<DetailPage> {
         },
         child: Scaffold(
           appBar: ImmersiveAppBar(
-            backgroundColor: Colors.blue,
-            leading: BackButton(),
+            gradient: const LinearGradient(
+              colors: [Colors.blueAccent, Colors.lightBlueAccent],
+            ),
+            elevation: 2.0,
+            leading: const BackButton(),
             child: Center(
               child: Container(
                 width: context.screenWidth * 0.7,
@@ -46,7 +49,7 @@ class _DetailPageState extends LxState<DetailPage> {
                   "${widget.model?.title}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ),

@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/pages/detail_page.dart';
 import 'package:flutter_wan_android/pages/home_page.dart';
+import 'package:flutter_wan_android/pages/tree_page.dart';
 
 /// 路由列表
 class MyRoutePath {
   final String location;
+  dynamic extra;
 
   MyRoutePath(this.location);
 
@@ -16,6 +18,10 @@ class MyRoutePath {
   MyRoutePath.details() : location = "/details";
 
   bool get isDetails => location == "/details";
+
+  MyRoutePath.trees({this.extra = ""}) : location = "/trees/$extra";
+
+  bool get isTree => location.contains("/trees/");
 }
 
 /// 构建页面
@@ -26,6 +32,11 @@ MaterialPage _buildPage(MyRoutePath path, args) {
   } else if (path.isDetails) {
     page = DetailPage(
       model: args,
+    );
+  } else if (path.isTree) {
+    page = TreePage(
+      treeData: args,
+      initialIndex: path.extra,
     );
   } else {
     page = Container();

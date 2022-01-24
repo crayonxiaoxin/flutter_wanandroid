@@ -53,6 +53,7 @@ class LxNet {
   }
 
   Future<LxResponse> send(LxBaseRequest request) {
+    print("lx_net: ${request.params}");
     _netAdapter ??= DioAdapter();
     return _netAdapter!.send(request);
   }

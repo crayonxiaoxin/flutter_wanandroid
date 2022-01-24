@@ -16,6 +16,8 @@ class DioAdapter extends LxNetAdapter {
       if (method == HttpMethod.GET) {
         response = await Dio().get(request.url(),
             queryParameters: request.params, options: options);
+        print("dio url: ${request.url()}");
+        print("dio params: ${request.params}");
       } else if (method == HttpMethod.POST) {
         response = await Dio()
             .post(request.url(), data: request.params, options: options);

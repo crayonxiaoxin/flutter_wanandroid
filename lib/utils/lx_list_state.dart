@@ -13,6 +13,9 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
 
   get extendBodyBehindAppBar => false;
 
+  // 是否允许加载更多
+  get enablePullUp => true;
+
   PreferredSizeWidget? get appBar => null;
 
   // 刷新时，是否清空初始数据
@@ -36,10 +39,11 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
       },
       header: const WaterDropMaterialHeader(
         color: Colors.white,
+        backgroundColor: Colors.blue,
         distance: 100,
       ),
       footer: const ClassicFooter(),
-      enablePullUp: true,
+      enablePullUp: enablePullUp,
       child: child,
     );
     return appBar != null

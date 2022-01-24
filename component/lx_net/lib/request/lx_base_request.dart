@@ -47,7 +47,7 @@ abstract class LxBaseRequest {
   }
 
   LxBaseRequest addParam(String key, dynamic value) {
-    headers[key] = value.toString();
+    params[key] = value.toString();
     return this;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_wan_android/net/request/base_request.dart';
 import 'package:lx_net/request/lx_base_request.dart';
 
-class HomeArticleRequest extends BaseRequest {
+class QaRequest extends BaseRequest {
   var page = 1;
 
   @override
@@ -10,12 +10,12 @@ class HomeArticleRequest extends BaseRequest {
   }
 
   @override
-  String path() {
-    return "article/list/${page - 1}/json";
+  bool needLogin() {
+    return false;
   }
 
   @override
-  bool needLogin() {
-    return false;
+  String path() {
+    return "wenda/list/${page - 1}/json";
   }
 }

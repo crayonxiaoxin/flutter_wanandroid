@@ -6,6 +6,8 @@
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/model/home_top_article_entity.dart';
+import 'package:flutter_wan_android/model/navi_entity.dart';
+import 'package:flutter_wan_android/model/tree_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -96,6 +98,21 @@ class JsonConvert {
     if (type == (HomeTopArticleEntity).toString()) {
       return HomeTopArticleEntity.fromJson(json) as M;
     }
+    if (type == (NaviEntity).toString()) {
+      return NaviEntity.fromJson(json) as M;
+    }
+    if (type == (NaviData).toString()) {
+      return NaviData.fromJson(json) as M;
+    }
+    if (type == (TreeEntity).toString()) {
+      return TreeEntity.fromJson(json) as M;
+    }
+    if (type == (TreeData).toString()) {
+      return TreeData.fromJson(json) as M;
+    }
+    if (type == (TreeDataChildren).toString()) {
+      return TreeDataChildren.fromJson(json) as M;
+    }
 
     print("$type not found");
 
@@ -103,41 +120,52 @@ class JsonConvert {
   }
 
   //list is returned by type
-  static M? _getListChildType<M>(List<Map<String, dynamic>> data) {
+  static M? _getListChildType<M>(List<dynamic> data) {
     if (<HomeArticleEntity>[] is M) {
       return data
-          .map<HomeArticleEntity>(
-              (Map<String, dynamic> e) => HomeArticleEntity.fromJson(e))
+          .map<HomeArticleEntity>((e) => HomeArticleEntity.fromJson(e))
           .toList() as M;
     }
     if (<HomeArticleDatas>[] is M) {
       return data
-          .map<HomeArticleDatas>(
-              (Map<String, dynamic> e) => HomeArticleDatas.fromJson(e))
+          .map<HomeArticleDatas>((e) => HomeArticleDatas.fromJson(e))
           .toList() as M;
     }
     if (<HomeArticleDatasTags>[] is M) {
       return data
-          .map<HomeArticleDatasTags>(
-              (Map<String, dynamic> e) => HomeArticleDatasTags.fromJson(e))
+          .map<HomeArticleDatasTags>((e) => HomeArticleDatasTags.fromJson(e))
           .toList() as M;
     }
     if (<HomeBannerEntity>[] is M) {
       return data
-          .map<HomeBannerEntity>(
-              (Map<String, dynamic> e) => HomeBannerEntity.fromJson(e))
+          .map<HomeBannerEntity>((e) => HomeBannerEntity.fromJson(e))
           .toList() as M;
     }
     if (<HomeBannerData>[] is M) {
       return data
-          .map<HomeBannerData>(
-              (Map<String, dynamic> e) => HomeBannerData.fromJson(e))
+          .map<HomeBannerData>((e) => HomeBannerData.fromJson(e))
           .toList() as M;
     }
     if (<HomeTopArticleEntity>[] is M) {
       return data
-          .map<HomeTopArticleEntity>(
-              (Map<String, dynamic> e) => HomeTopArticleEntity.fromJson(e))
+          .map<HomeTopArticleEntity>((e) => HomeTopArticleEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<NaviEntity>[] is M) {
+      return data.map<NaviEntity>((e) => NaviEntity.fromJson(e)).toList() as M;
+    }
+    if (<NaviData>[] is M) {
+      return data.map<NaviData>((e) => NaviData.fromJson(e)).toList() as M;
+    }
+    if (<TreeEntity>[] is M) {
+      return data.map<TreeEntity>((e) => TreeEntity.fromJson(e)).toList() as M;
+    }
+    if (<TreeData>[] is M) {
+      return data.map<TreeData>((e) => TreeData.fromJson(e)).toList() as M;
+    }
+    if (<TreeDataChildren>[] is M) {
+      return data
+          .map<TreeDataChildren>((e) => TreeDataChildren.fromJson(e))
           .toList() as M;
     }
 
@@ -151,8 +179,7 @@ class JsonConvert {
       return null;
     }
     if (json is List) {
-      return _getListChildType<M>(
-          json.map((e) => e as Map<String, dynamic>).toList());
+      return _getListChildType<M>(json);
     } else {
       return _fromJsonSingle<M>(json as Map<String, dynamic>);
     }

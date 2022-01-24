@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wan_android/pages/home_tab/tab_home_page.dart';
+import 'package:flutter_wan_android/pages/tab_home/tab_home_page.dart';
+import 'package:flutter_wan_android/pages/tab_home/tab_qa_page.dart';
+import 'package:flutter_wan_android/pages/tab_home/tab_sys_page.dart';
 import 'package:lx_base/lx_state.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -49,13 +51,9 @@ class _MyHomePageState extends LxState<MyHomePage> {
           });
         },
         children: [
-          TabHomePage(),
-          Container(
-            child: Text("222"),
-          ),
-          Container(
-            child: Text("333"),
-          ),
+          const TabHomePage(),
+          const TabQaPage(),
+          const TabSysPage(),
           Container(
             child: Text("444"),
           ),
