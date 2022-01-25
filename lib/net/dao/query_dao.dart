@@ -5,6 +5,7 @@ import 'package:flutter_wan_android/net/request/query_request.dart';
 import 'package:lx_net/lx_net.dart';
 
 class QueryDao {
+  /// 搜索
   static Future<HomeArticleEntity> query(
       {String keyword = "", int page = 1, int pageSize = 20}) async {
     var request = QueryRequest();
@@ -15,6 +16,7 @@ class QueryDao {
     return HomeArticleEntity.fromJson(response['data']);
   }
 
+  /// 搜索热词
   static Future<HotkeyEntity> hotKey() async {
     var request = QueryHotkeyRequest();
     var response = await LxNet.instance.request(request);

@@ -31,7 +31,9 @@ class DioAdapter extends LxNetAdapter {
       response = e.response;
     }
     if (kDebugMode) {
-      print("dio: $response");
+      print("dio headers: ${request.headers}");
+      print("dio params: ${request.params}");
+      print("dio response: $response");
       print("dio error: $error");
     }
     if (error != null) {

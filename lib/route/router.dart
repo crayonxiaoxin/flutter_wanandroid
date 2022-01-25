@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/pages/detail_page.dart';
 import 'package:flutter_wan_android/pages/home_page.dart';
 import 'package:flutter_wan_android/pages/hotkey_page.dart';
+import 'package:flutter_wan_android/pages/login_page.dart';
 import 'package:flutter_wan_android/pages/query_page.dart';
 import 'package:flutter_wan_android/pages/tree_page.dart';
 
@@ -32,6 +33,10 @@ class MyRoutePath {
   MyRoutePath.hotkey() : location = "/hotkey";
 
   bool get isHotkey => location == "/hotkey";
+
+  MyRoutePath.login() : location = "/login";
+
+  bool get isLogin => location == "/login";
 }
 
 /// 构建页面
@@ -52,6 +57,8 @@ MaterialPage _buildPage(MyRoutePath path, args) {
     page = QueryPage(initKeyword: args);
   } else if (path.isHotkey) {
     page = const HotkeyPage();
+  } else if (path.isLogin) {
+    page = const LoginPage();
   } else {
     page = Container();
   }

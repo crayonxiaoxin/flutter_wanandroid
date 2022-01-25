@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/route/router.dart';
-import 'package:lx_base/utils/run_and_catch.dart';
 import 'package:lx_cache/lx_cache.dart';
 
 void main() {
-  runSafety(MyApp());
+  // runSafety(MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

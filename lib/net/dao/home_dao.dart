@@ -9,6 +9,7 @@ import 'package:lx_net/lx_net.dart';
 
 /// 首页 & 问答
 class HomeDao {
+  /// 首页文章
   static Future<HomeArticleEntity> getArticles(
       {int page = 1, int pageSize = 20, dynamic cid}) async {
     var request = HomeArticleRequest();
@@ -22,18 +23,21 @@ class HomeDao {
     return HomeArticleEntity.fromJson(response['data']);
   }
 
+  /// 置顶文章
   static Future<HomeTopArticleEntity> getTopArticles() async {
     var request = HomeTopArticleRequest();
     var response = await LxNet.instance.request(request);
     return HomeTopArticleEntity.fromJson(response);
   }
 
+  /// 首页 banner
   static Future<HomeBannerEntity> getBanners() async {
     var request = HomeBannerRequest();
     var response = await LxNet.instance.request(request);
     return HomeBannerEntity.fromJson(response);
   }
 
+  /// 问答
   static Future<HomeArticleEntity> getQAs(
       {int page = 1, int pageSize = 20}) async {
     var request = QaRequest();
