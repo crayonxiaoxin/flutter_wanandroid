@@ -5,7 +5,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 /// 抽象列表类
 abstract class LxListState<Model, Entity, T extends StatefulWidget>
     extends LxState<T> {
-  final RefreshController _refreshController = RefreshController();
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
   List<Model> dataList = [];
   int _currentPage = 1;
 
@@ -25,10 +26,14 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
   // 刷新时，是否清空初始数据
   bool get isLoadInitClear => true;
 
+  // 是否加载完成
+  bool isLoadAll = false;
+
   @override
   void initState() {
     super.initState();
-    onLoading(isLoadMore: false);
+    // 设置了 RefreshController(initialRefresh: true) 就不用在初始化手动加载了
+    // onLoading(isLoadMore: false);
   }
 
   @override
@@ -47,7 +52,13 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
         backgroundColor: Colors.blue,
         distance: 100,
       ),
-      footer: const ClassicFooter(),
+      footer: const ClassicFooter(
+        loadingText: "加载中...",
+        canLoadingText: "上拉加载更多",
+        failedText: "加载失败，请重试",
+        idleText: "加载完成",
+        noDataText: "没有更多了",
+      ),
       enablePullUp: enablePullUp,
       child: child,
     );
@@ -64,10 +75,10 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
   void onLoading({bool isLoadMore = true}) async {
     if (!isLoadMore) {
       _currentPage = 1;
+      isLoadAll = false;
     }
+    if (isLoadAll) return;
     try {
-      // var res = await HomeDao.getArticles(page: _currentPage);
-      // var list = res.datas ?? List.empty();
       var res = await getData(_currentPage);
       var list = parseList(res);
       _refreshController.loadComplete();
@@ -83,7 +94,12 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
           dataList.addAll(list);
         }
       });
-      _currentPage++;
+      if (list.isEmpty) {
+        isLoadAll = true;
+        _refreshController.loadNoData();
+      } else {
+        _currentPage++;
+      }
     } catch (e) {
       _refreshController.loadFailed();
       _refreshController.refreshFailed();

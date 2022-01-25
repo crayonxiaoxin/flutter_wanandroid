@@ -4,6 +4,7 @@ import 'package:flutter_wan_android/model/hotkey_entity.dart';
 import 'package:flutter_wan_android/net/dao/query_dao.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
+import 'package:flutter_wan_android/widgets/search_box.dart';
 import 'package:flutter_wan_android/widgets/tag_group.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
@@ -33,40 +34,7 @@ class _HotkeyPageState
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    height: 32,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: TextField(
-                      controller: _textEditingController,
-                      onSubmitted: (value) {
-                        _submit();
-                      },
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      autofocus: true,
-                      style: const TextStyle(fontSize: 14),
-                      decoration: InputDecoration(
-                          isCollapsed: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 6),
-                          hintText: "支持多个关键词，请用空格隔开",
-                          hintStyle:
-                              const TextStyle(fontSize: 14, color: Colors.grey),
-                          suffixIcon: _textEditingController.text.isNotEmpty
-                              ? InkWell(
-                                  onTap: _clear,
-                                  child: const Icon(
-                                    Icons.clear,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              : null,
-                          border: InputBorder.none),
-                    ),
-                  ),
+                  child: _buildSearchBox(),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -81,6 +49,20 @@ class _HotkeyPageState
               ],
             ));
       },
+    );
+  }
+
+  _buildSearchBox() {
+    return SearchBox(
+      textEditingController: _textEditingController,
+      autofocus: true,
+      onSubmitted: (value) {
+        _submit();
+      },
+      onChanged: (value) {
+        setState(() {});
+      },
+      onClear: _clear,
     );
   }
 
