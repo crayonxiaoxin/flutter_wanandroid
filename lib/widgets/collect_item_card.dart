@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wan_android/model/home_article_entity.dart';
+import 'package:flutter_wan_android/model/collect_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
 import 'package:flutter_wan_android/widgets/url_utils.dart';
 import 'package:lx_base/utils/html_utils.dart';
 import 'package:lx_base/utils/string_utils.dart';
 import 'package:lx_base/utils/toast.dart';
 
-class ArticleItemCard extends StatefulWidget {
-  final HomeArticleDatas item;
+class CollectItemCard extends StatefulWidget {
+  final CollectDatas item;
   final bool showDetail;
   final ValueChanged<bool>? onCollect;
 
-  const ArticleItemCard(
+  const CollectItemCard(
     this.item, {
     Key? key,
     this.showDetail = false,
@@ -19,16 +19,16 @@ class ArticleItemCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ArticleItemCard> createState() => _ArticleItemCardState();
+  State<CollectItemCard> createState() => _CollectItemCardState();
 }
 
-class _ArticleItemCardState extends State<ArticleItemCard> {
-  bool isCollected = false;
+class _CollectItemCardState extends State<CollectItemCard> {
+  bool isCollected = true;
 
   @override
   void initState() {
     super.initState();
-    isCollected = widget.item.collect ?? false;
+    isCollected = true;
   }
 
   @override
@@ -99,13 +99,8 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
       children: [
         Row(
           children: [
-            if (widget.item.type == 1)
-              const Text(
-                "置顶  ",
-                style: TextStyle(fontSize: 12, color: Colors.orangeAccent),
-              ),
             Text(
-              "${widget.item.superChapterName} · ${widget.item.chapterName}",
+              "${widget.item.chapterName}",
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             )
           ],
@@ -123,10 +118,7 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
   }
 
   Row _articleItemTop() {
-    var username =
-        (widget.item.author != null && widget.item.author!.isNotEmpty)
-            ? widget.item.author
-            : widget.item.shareUser;
+    var username = widget.item.author ?? "";
     return Row(
       children: [
         Expanded(
@@ -135,54 +127,24 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Text(
-                  "$username",
+                  username,
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ),
-              ..._articleTags(widget.item.tags)
             ],
           ),
         ),
-        Text("${widget.item.niceShareDate}",
+        Text("${widget.item.niceDate}",
             style: const TextStyle(fontSize: 12, color: Colors.grey))
       ],
     );
   }
 
-  _articleTags(List<HomeArticleDatasTags>? tags) {
-    if (tags == null) return [];
-    return tags.map((e) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.blue)),
-        child: Text(
-          "${e.name}",
-          style: const TextStyle(fontSize: 12, color: Colors.blue),
-        ),
-      );
-    }).toList();
-  }
-
-  void _favorite(HomeArticleDatas item) async {
+  void _favorite(CollectDatas item) async {
     if (isCollected) {
-      var response = await HomeDao.unCollectArticle(item.id);
+      var response = await HomeDao.unCollectArticle(item.id,
+          originId: item.originId ?? -1);
       toast(response ? "取消收藏成功！" : "取消收藏失败！");
-      if (response) {
-        setState(() {
-          isCollected = false;
-        });
-      }
-    } else {
-      var response = await HomeDao.collectArticle(item.id);
-      toast(response ? "收藏成功！" : "收藏失败！");
-      if (response) {
-        setState(() {
-          isCollected = true;
-        });
-      }
     }
     widget.onCollect?.call(isCollected);
   }

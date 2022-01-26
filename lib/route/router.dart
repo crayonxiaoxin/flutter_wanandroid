@@ -5,7 +5,14 @@ import 'package:flutter_wan_android/pages/home_page.dart';
 import 'package:flutter_wan_android/pages/hotkey_page.dart';
 import 'package:flutter_wan_android/pages/login_page.dart';
 import 'package:flutter_wan_android/pages/query_page.dart';
+import 'package:flutter_wan_android/pages/register_page.dart';
+import 'package:flutter_wan_android/pages/tab_profile/tab_coin_page.dart';
+import 'package:flutter_wan_android/pages/tab_profile/tab_collect_page.dart';
+import 'package:flutter_wan_android/pages/tab_profile/tab_settings_page.dart';
 import 'package:flutter_wan_android/pages/tree_page.dart';
+
+/// 全局 context
+final GlobalKey<NavigatorState> routerKey = GlobalKey<NavigatorState>();
 
 /// 路由列表
 class MyRoutePath {
@@ -16,27 +23,43 @@ class MyRoutePath {
 
   MyRoutePath.home() : location = "/";
 
-  bool get isHome => location == "/";
-
   MyRoutePath.details() : location = "/details";
-
-  bool get isDetails => location == "/details";
 
   MyRoutePath.trees({this.extra = ""}) : location = "/trees/$extra";
 
-  bool get isTree => location.contains("/trees/");
-
   MyRoutePath.query() : location = "/query";
-
-  bool get isQuery => location == "/query";
 
   MyRoutePath.hotkey() : location = "/hotkey";
 
-  bool get isHotkey => location == "/hotkey";
-
   MyRoutePath.login() : location = "/login";
 
+  MyRoutePath.register() : location = "/register";
+
+  MyRoutePath.collectList() : location = "/profile/collect_list";
+
+  MyRoutePath.coinList() : location = "/profile/coin_list";
+
+  MyRoutePath.settings() : location = "/profile/settings";
+
+  bool get isHome => location == "/";
+
+  bool get isDetails => location == "/details";
+
+  bool get isTree => location.contains("/trees/");
+
+  bool get isQuery => location == "/query";
+
+  bool get isHotkey => location == "/hotkey";
+
   bool get isLogin => location == "/login";
+
+  bool get isRegister => location == "/register";
+
+  bool get isCollectList => location == "/profile/collect_list";
+
+  bool get isSettings => location == "/profile/settings";
+
+  bool get isCoinList => location == "/profile/coin_list";
 }
 
 /// 构建页面
@@ -59,6 +82,14 @@ MaterialPage _buildPage(MyRoutePath path, args) {
     page = const HotkeyPage();
   } else if (path.isLogin) {
     page = const LoginPage();
+  } else if (path.isCollectList) {
+    page = const CollectListPage();
+  } else if (path.isSettings) {
+    page = const SettingsPage();
+  } else if (path.isRegister) {
+    page = const RegisterPage();
+  } else if (path.isCoinList) {
+    page = const CoinPage();
   } else {
     page = Container();
   }
@@ -148,7 +179,7 @@ class MyRouterDelegate extends RouterDelegate<MyRoutePath>
   }
 
   @override
-  GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>? navigatorKey = routerKey;
 
   @override
   Future<void> setNewRoutePath(MyRoutePath configuration) async {

@@ -7,6 +7,12 @@ abstract class LxNetAdapter {
   Future<LxResponse<dynamic>> send(LxBaseRequest request);
 }
 
+/// 请求拦截器
+abstract class LxNetInterceptor {
+  LxResponse<dynamic>? intercept(
+      LxResponse<dynamic>? response, LxBaseRequest request);
+}
+
 /// 统一返回
 class LxResponse<T> {
   T? data;

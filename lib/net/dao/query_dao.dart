@@ -8,8 +8,7 @@ class QueryDao {
   /// 搜索
   static Future<HomeArticleEntity> query(
       {String keyword = "", int page = 1, int pageSize = 20}) async {
-    var request = QueryRequest();
-    request.page = page;
+    var request = QueryRequest(page);
     request.addParam("page_size", pageSize);
     request.addParam("k", keyword);
     var response = await LxNet.instance.request(request);

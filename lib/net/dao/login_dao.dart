@@ -1,8 +1,11 @@
 import 'package:flutter_wan_android/model/coin_entity.dart';
+import 'package:flutter_wan_android/model/coin_list_entity.dart';
 import 'package:flutter_wan_android/model/login_entity.dart';
 import 'package:flutter_wan_android/model/user_info_entity.dart';
+import 'package:flutter_wan_android/net/request/coin_list_request.dart';
 import 'package:flutter_wan_android/net/request/coin_request.dart';
 import 'package:flutter_wan_android/net/request/login_request.dart';
+import 'package:flutter_wan_android/net/request/register_request.dart';
 import 'package:flutter_wan_android/net/request/user_info_request.dart';
 import 'package:lx_cache/lx_cache.dart';
 import 'package:lx_net/core/lx_error.dart';
@@ -51,6 +54,18 @@ class LoginDao {
     }
   }
 
+  /// 注册
+  static Future<bool> register(String login, String password) async {
+    var request = RegisterRequest();
+    request
+        .addParam("username", login)
+        .addParam("password", password)
+        .addParam("repassword", password);
+    var response = await LxNet.instance.request(request);
+    print(response);
+    return response['errorCode'] == 0;
+  }
+
   /// 个人信息
   static Future<UserInfoEntity> getUserInfo() async {
     var request = UserInfoRequest();
@@ -72,16 +87,19 @@ class LoginDao {
     return CoinEntity.fromJson(response);
   }
 
+  /// 个人积分列表
+  static Future<CoinListEntity> getCoinList(
+      {int page = 1, int pageSize = 20}) async {
+    var request = CoinListRequest(page)..addParam("page_size", pageSize);
+    var response = await LxNet.instance.request(request);
+    return CoinListEntity.fromJson(response['data']);
+  }
+
   /// 登录状态验证
   static Map<String, String> headers() {
     var jsonList = LxCache.instance.getString(KEY_AUTH_HEADERS);
-    // if (jsonList.startsWith("[")) {
-    //   jsonList = jsonList.substring(1);
-    // }
-    // if (jsonList.endsWith("]")) {
-    //   jsonList = jsonList.substring(0, jsonList.length - 1);
-    // }
-    Map<String, String> headers = {"Cookie": jsonList};
+    Map<String, String> headers =
+        jsonList.isNotEmpty ? {"Cookie": jsonList} : {};
     print("header:$headers");
     return headers;
   }

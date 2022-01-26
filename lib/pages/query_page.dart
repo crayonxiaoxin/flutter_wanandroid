@@ -95,12 +95,16 @@ class _QueryPageState
         return ArticleItemCard(
           dataList[index],
           showDetail: true,
+          onCollect: (collect) {
+            dataList[index].collect = collect;
+          },
         );
       });
 
   @override
-  Future<HomeArticleEntity> getData(int pageIndex) {
-    return QueryDao.query(page: pageIndex, keyword: keyword);
+  Future<HomeArticleEntity> getData(int pageIndex, int pageSize) {
+    return QueryDao.query(
+        page: pageIndex, pageSize: pageSize, keyword: keyword);
   }
 
   @override

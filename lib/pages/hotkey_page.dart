@@ -93,7 +93,7 @@ class _HotkeyPageState
   get enablePullUp => false;
 
   @override
-  Future<HotkeyEntity> getData(int pageIndex) {
+  Future<HotkeyEntity> getData(int pageIndex, int pageSize) {
     return QueryDao.hotKey();
   }
 

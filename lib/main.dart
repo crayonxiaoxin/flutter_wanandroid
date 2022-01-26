@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/net/interceptor/response_interceptor.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_cache/lx_cache.dart';
+import 'package:lx_net/lx_net.dart';
 
 void main() {
   // runSafety(MyApp());
+  LxNet.preInit(interceptor: ResponseInterceptor());
   runApp(MyApp());
 }
 

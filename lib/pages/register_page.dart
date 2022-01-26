@@ -5,21 +5,24 @@ import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends LxState<LoginPage> {
+class _RegisterPageState extends LxState<RegisterPage> {
   String _username = "";
   String _password = "";
+  String _rePassword = "";
   final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNodeRePass = FocusNode();
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _focusNodeRePass.dispose();
     super.dispose();
   }
 
@@ -39,7 +42,7 @@ class _LoginPageState extends LxState<LoginPage> {
             children: [
               const Center(
                 child: Text(
-                  "登录",
+                  "注册",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -50,11 +53,11 @@ class _LoginPageState extends LxState<LoginPage> {
                   right: 0,
                   child: InkWell(
                     onTap: () {
-                      MyRouterDelegate.of(context).push(MyRoutePath.register());
+                      MyRouterDelegate.of(context).pop();
                     },
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("注册",
+                      child: Text("登录",
                           style: TextStyle(color: Colors.grey[200]!)),
                     ),
                   ))
@@ -110,10 +113,32 @@ class _LoginPageState extends LxState<LoginPage> {
                   });
                 },
                 onSubmitted: (value) {
-                  _login();
+                  _focusNodeRePass.requestFocus();
                 },
                 decoration: InputDecoration(
                     labelText: "密码",
+                    border: OutlineInputBorder(
+                        gapPadding: 0,
+                        borderRadius: BorderRadius.circular(16))),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 16)),
+            SizedBox(
+              height: 50,
+              child: TextField(
+                focusNode: _focusNodeRePass,
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+                onChanged: (value) {
+                  setState(() {
+                    _rePassword = value.trim();
+                  });
+                },
+                onSubmitted: (value) {
+                  _register();
+                },
+                decoration: InputDecoration(
+                    labelText: "确认密码",
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -125,12 +150,12 @@ class _LoginPageState extends LxState<LoginPage> {
               color: Colors.blue,
               elevation: 2.0,
               child: InkWell(
-                onTap: _login,
+                onTap: _register,
                 child: Container(
                     height: 50,
                     alignment: Alignment.center,
                     child: const Text(
-                      "登录",
+                      "注册",
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     )),
               ),
@@ -143,15 +168,17 @@ class _LoginPageState extends LxState<LoginPage> {
     );
   }
 
-  _login() async {
+  _register() async {
     if (_username.isEmpty || _password.isEmpty) {
       toast("用户名或密码不能为空");
+    } else if (_password != _rePassword) {
+      toast("两次密码输入不一致！");
     } else {
       var res = await LoginDao.login(_username, _password);
       if (res.errorCode != 0) {
-        toast("登录失败：${res.errorMsg}");
-      } else if (LoginDao.isLogin) {
-        MyRouterDelegate.of(context).pop(result: LoginDao.isLogin);
+        toast("注册失败：${res.errorMsg}");
+      } else {
+        toast("注册成功！");
       }
     }
   }

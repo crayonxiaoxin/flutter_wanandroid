@@ -23,12 +23,16 @@ class _TabTreeArticlePageState extends LxListState<HomeArticleDatas,
         return ArticleItemCard(
           dataList[index],
           showDetail: true,
+          onCollect: (collect) {
+            dataList[index].collect = collect;
+          },
         );
       });
 
   @override
-  Future<HomeArticleEntity> getData(int pageIndex) {
-    return HomeDao.getArticles(page: pageIndex, cid: widget.cid);
+  Future<HomeArticleEntity> getData(int pageIndex, int pageSize) {
+    return HomeDao.getArticles(
+        page: pageIndex, pageSize: pageSize, cid: widget.cid);
   }
 
   @override

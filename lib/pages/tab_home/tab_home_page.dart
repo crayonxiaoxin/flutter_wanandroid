@@ -95,12 +95,15 @@ class _TabHomePageState
         return ArticleItemCard(
           dataList[index],
           showDetail: true,
+          onCollect: (collect) {
+            dataList[index].collect = collect;
+          },
         );
       });
 
   @override
-  Future<HomeArticleEntity> getData(int pageIndex) {
-    return HomeDao.getArticles(page: pageIndex);
+  Future<HomeArticleEntity> getData(int pageIndex, int pageSize) {
+    return HomeDao.getArticles(page: pageIndex, pageSize: pageSize);
   }
 
   @override

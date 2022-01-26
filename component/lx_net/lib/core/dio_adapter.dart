@@ -12,27 +12,32 @@ class DioAdapter extends LxNetAdapter {
     Exception? error;
     var options = Options(headers: request.headers);
     var method = request.httpMethod();
+    if (kDebugMode) {
+      print("dio headers: ${options.headers}");
+      print("dio request headers: ${request.headers}");
+      print("dio params: ${request.params}");
+      print("dio method: ${options.method}");
+    }
+    var dio = Dio();
     try {
       if (method == HttpMethod.GET) {
-        response = await Dio().get(request.url(),
+        response = await dio.get(request.url(),
             queryParameters: request.params, options: options);
       } else if (method == HttpMethod.POST) {
-        response = await Dio()
-            .post(request.url(), data: request.params, options: options);
+        response = await dio.post(request.url(),
+            data: request.params, options: options);
       } else if (method == HttpMethod.DELETE) {
-        response = await Dio()
-            .post(request.url(), data: request.params, options: options);
+        response = await dio.post(request.url(),
+            data: request.params, options: options);
       } else if (method == HttpMethod.PUT) {
-        response = await Dio()
-            .put(request.url(), data: request.params, options: options);
+        response = await dio.put(request.url(),
+            data: request.params, options: options);
       }
     } on DioError catch (e) {
       error = e;
       response = e.response;
     }
     if (kDebugMode) {
-      print("dio headers: ${request.headers}");
-      print("dio params: ${request.params}");
       print("dio response: $response");
       print("dio error: $error");
     }

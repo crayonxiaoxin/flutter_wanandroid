@@ -10,6 +10,9 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
   List<Model> dataList = [];
   int _currentPage = 1;
 
+  // 每页数量
+  get pageSize => 20;
+
   Widget get child;
 
   get extendBodyBehindAppBar => false;
@@ -79,7 +82,7 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
     }
     if (isLoadAll) return;
     try {
-      var res = await getData(_currentPage);
+      var res = await getData(_currentPage, pageSize);
       var list = parseList(res);
       _refreshController.loadComplete();
       _refreshController.refreshCompleted();
@@ -97,6 +100,8 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
       if (list.isEmpty) {
         isLoadAll = true;
         _refreshController.loadNoData();
+      } else if (list.length < pageSize) {
+        _refreshController.loadNoData();
       } else {
         _currentPage++;
       }
@@ -107,7 +112,7 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
     }
   }
 
-  Future<Entity> getData(int pageIndex);
+  Future<Entity> getData(int pageIndex, int pageSize);
 
   List<Model> parseList(Entity res);
 }

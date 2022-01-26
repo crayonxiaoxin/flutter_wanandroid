@@ -1,10 +1,10 @@
 import 'package:flutter_wan_android/net/request/base_request.dart';
 import 'package:lx_net/request/lx_base_request.dart';
 
-class QueryRequest extends BaseRequest {
-  int page;
+class CollectRequest extends BaseRequest {
+  int id;
 
-  QueryRequest(this.page);
+  CollectRequest(this.id);
 
   @override
   HttpMethod httpMethod() {
@@ -13,11 +13,11 @@ class QueryRequest extends BaseRequest {
 
   @override
   bool needLogin() {
-    return false;
+    return true;
   }
 
   @override
   String path() {
-    return "article/query/${page - 1}/json";
+    return "lg/collect/$id/json";
   }
 }

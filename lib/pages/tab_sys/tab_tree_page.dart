@@ -24,7 +24,7 @@ class _TabTreePageState extends LxListState<TreeData, TreeEntity, TabTreePage> {
       });
 
   @override
-  Future<TreeEntity> getData(int pageIndex) {
+  Future<TreeEntity> getData(int pageIndex, int pageSize) {
     return SysDao.getTree();
   }
 

@@ -24,7 +24,7 @@ class _TabNaviPageState extends LxListState<NaviData, NaviEntity, TabNaviPage> {
       });
 
   @override
-  Future<NaviEntity> getData(int pageIndex) {
+  Future<NaviEntity> getData(int pageIndex, int pageSize) {
     return SysDao.getNavigation();
   }
 

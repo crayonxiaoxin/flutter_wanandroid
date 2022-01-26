@@ -22,10 +22,30 @@ class LxNet {
     return _instance!;
   }
 
+  /// 预初始化，设置拦截器&适配器
+  static LxNet preInit(
+      {required LxNetInterceptor interceptor, LxNetAdapter? adapter}) {
+    var instance = _getInstance();
+    instance.addInterceptor(interceptor);
+    if (adapter != null) {
+      instance.setAdapter(adapter);
+    }
+    return instance;
+  }
+
   LxNetAdapter? _netAdapter;
 
+  /// 适配器
   LxNet setAdapter(LxNetAdapter adapter) {
     _netAdapter = adapter;
+    return this;
+  }
+
+  final Map<String, LxNetInterceptor> _netInterceptors = {};
+
+  /// 拦截器
+  LxNet addInterceptor(LxNetInterceptor interceptor) {
+    _netInterceptors[interceptor.runtimeType.toString()] = interceptor;
     return this;
   }
 
@@ -34,6 +54,9 @@ class LxNet {
     var error;
     try {
       response = await send(request);
+      for (var entry in _netInterceptors.entries) {
+        response = entry.value.intercept(response, request);
+      }
     } on LxNetError catch (e) {
       error = e;
       response = e.data;
