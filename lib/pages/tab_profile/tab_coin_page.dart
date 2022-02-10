@@ -44,9 +44,7 @@ class _CoinPageState
             child: Stack(
               children: [
                 const Positioned(
-                  child: BackButton(
-                    color: Colors.white,
-                  ),
+                  child: BackButton(color: Colors.white),
                   left: 0,
                   top: 0,
                   bottom: 0,

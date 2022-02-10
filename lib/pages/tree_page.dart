@@ -51,9 +51,7 @@ class _TreePageState extends LxState<TreePage>
               height: 46,
               child: Stack(
                 children: [
-                  const BackButton(
-                    color: Colors.white,
-                  ),
+                  const BackButton(color: Colors.white),
                   Center(
                     child: Text(
                       "${widget.treeData.name}",

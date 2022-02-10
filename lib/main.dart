@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/net/interceptor/response_interceptor.dart';
+import 'package:flutter_wan_android/provider/providers.dart';
+import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_cache/lx_cache.dart';
 import 'package:lx_net/lx_net.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // runSafety(MyApp());
@@ -41,13 +44,22 @@ class MyApp extends StatelessWidget {
                   child: CircularProgressIndicator(), // 显示 loading
                 ),
               );
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: widget,
-          debugShowCheckedModeBanner: false,
+        return MultiProvider(
+          providers: providers,
+          child: Consumer<ThemeProvider>(builder: (
+            BuildContext context,
+            ThemeProvider themeProvider,
+            Widget? child,
+          ) {
+            return MaterialApp(
+              title: 'Flutter WanAndroid',
+              theme: themeProvider.getTheme(),
+              darkTheme: themeProvider.getTheme(isDarkMode: true),
+              themeMode: themeProvider.getThemeMode(),
+              home: widget,
+              debugShowCheckedModeBanner: false,
+            );
+          }),
         );
       },
     );

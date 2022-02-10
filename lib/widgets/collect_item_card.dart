@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/model/collect_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
+import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/widgets/url_utils.dart';
 import 'package:lx_base/utils/html_utils.dart';
 import 'package:lx_base/utils/string_utils.dart';
 import 'package:lx_base/utils/toast.dart';
+import 'package:provider/src/provider.dart';
 
 class CollectItemCard extends StatefulWidget {
   final CollectDatas item;
@@ -37,10 +39,11 @@ class _CollectItemCardState extends State<CollectItemCard> {
   }
 
   Widget _articleItem(BuildContext context) {
+    var themeProvider = context.watch<ThemeProvider>();
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
       child: Material(
-        color: Colors.white,
+        color: themeProvider.isDarkMode() ? null : Colors.white,
         borderRadius: BorderRadius.circular(10),
         shadowColor: Colors.grey[50],
         elevation: 0.2,
@@ -73,10 +76,8 @@ class _CollectItemCardState extends State<CollectItemCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(parseHtml(widget.item.title),
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           if (widget.showDetail && isNotEmpty(widget.item.desc))
             Container(
               padding: const EdgeInsets.only(top: 8),

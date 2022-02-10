@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
+import 'package:flutter_wan_android/provider/home_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
 import 'package:flutter_wan_android/widgets/article_item_card.dart';
 import 'package:flutter_wan_android/widgets/home_banner.dart';
 import 'package:lx_base/widget/adaptive_container.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
+import 'package:provider/src/provider.dart';
 
 class TabHomePage extends StatefulWidget {
   const TabHomePage({Key? key}) : super(key: key);
@@ -20,31 +22,6 @@ class TabHomePage extends StatefulWidget {
 class _TabHomePageState
     extends LxListState<HomeArticleDatas, HomeArticleEntity, TabHomePage> {
   List<HomeBannerData> banners = [];
-
-  // @override
-  // var appBar = ImmersiveAppBar(
-  //   backgroundColor: Colors.blue,
-  //   elevation: 2,
-  //   height: 50,
-  //   child: Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  //     child: InkWell(
-  //       onTap: () {
-  //         toast("to search");
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //             color: Colors.white, borderRadius: BorderRadius.circular(16)),
-  //         padding: const EdgeInsets.only(right: 6),
-  //         child: const Icon(
-  //           Icons.search,
-  //           color: Colors.grey,
-  //         ),
-  //         alignment: Alignment.centerRight,
-  //       ),
-  //     ),
-  //   ),
-  // );
 
   @override
   var appBar = ImmersiveAppBar(
@@ -84,8 +61,23 @@ class _TabHomePageState
     },
   );
 
+  late HomeProvider homeProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    homeProvider = context.watch<HomeProvider>();
+    // 监听是否隐藏 banner 或 置顶文章
+    if (homeProvider.shouldReload) {
+      homeProvider.shouldReload = false;
+      dataList.clear();
+      onLoading(isLoadMore: false);
+    }
+    return super.build(context);
+  }
+
   @override
   Widget get child => ListView.builder(
+      padding: const EdgeInsets.only(top: 10),
       itemCount: dataList.length + (banners.isNotEmpty ? 1 : 0),
       itemBuilder: (context, index) {
         if (banners.isNotEmpty && index == 0) {
@@ -118,8 +110,12 @@ class _TabHomePageState
   @override
   void onLoading({bool isLoadMore = true}) {
     if (!isLoadMore) {
-      _loadBanners();
-      _loadTopArticles();
+      if (homeProvider.canShowBanner()) {
+        _loadBanners();
+      }
+      if (homeProvider.canShowTopArticles()) {
+        _loadTopArticles();
+      }
     }
     super.onLoading(isLoadMore: isLoadMore);
   }
@@ -152,7 +148,7 @@ class _TabHomePageState
 
   _banners() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
       child: AdaptiveContainer(
         builder: (h) {
           return HomeBanner(

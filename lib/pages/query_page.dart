@@ -37,7 +37,7 @@ class _QueryPageState
         colors: [Colors.lightBlueAccent, Colors.blueAccent],
       ),
       elevation: 2,
-      leading: const BackButton(),
+      leading: const BackButton(color: Colors.white),
       builder: (context) {
         return Container(
             margin: const EdgeInsets.only(left: 60, right: 16),

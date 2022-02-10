@@ -44,7 +44,7 @@ class SearchBox extends StatelessWidget {
         onSubmitted: onSubmitted,
         onChanged: onChanged,
         autofocus: autofocus,
-        style: TextStyle(fontSize: fontSize),
+        style: TextStyle(fontSize: fontSize, color: Colors.black87),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
             isCollapsed: false,

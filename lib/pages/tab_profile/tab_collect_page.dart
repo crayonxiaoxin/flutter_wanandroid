@@ -21,7 +21,7 @@ class _CollectListPageState
       colors: [Colors.lightBlueAccent, Colors.blueAccent],
     ),
     elevation: 2,
-    leading: const BackButton(),
+    leading: const BackButton(color: Colors.white),
     child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Stack(

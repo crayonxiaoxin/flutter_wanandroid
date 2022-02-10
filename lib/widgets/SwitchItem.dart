@@ -51,7 +51,7 @@ class _SwitchItemState extends State<SwitchItem> {
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: widget.disabled ? Colors.grey : Colors.black87)),
+                      color: widget.disabled ? Colors.grey : null)),
               if (isNotEmpty(widget.desc))
                 Padding(
                   padding: const EdgeInsets.only(top: 5),

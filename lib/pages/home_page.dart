@@ -3,7 +3,11 @@ import 'package:flutter_wan_android/pages/tab_home/tab_home_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_qa_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_sys_page.dart';
+import 'package:flutter_wan_android/provider/home_provider.dart';
+import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:lx_base/lx_state.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/src/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -44,19 +48,27 @@ class _MyHomePageState extends LxState<MyHomePage> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+      body: Consumer<HomeProvider>(
+        builder: (
+          BuildContext context,
+          HomeProvider value,
+          Widget? child,
+        ) {
+          return PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            children: const [
+              TabHomePage(),
+              TabQaPage(),
+              TabSysPage(),
+              ProfilePage()
+            ],
+          );
         },
-        children: const [
-          TabHomePage(),
-          TabQaPage(),
-          TabSysPage(),
-          ProfilePage()
-        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -88,5 +100,12 @@ class _MyHomePageState extends LxState<MyHomePage> {
           icon,
         ),
         label: label);
+  }
+
+  /// 监听系统主题变化
+  @override
+  void didChangeDependencies() {
+    context.read<ThemeProvider>().systemDarkModeChange();
+    super.didChangeDependencies();
   }
 }
