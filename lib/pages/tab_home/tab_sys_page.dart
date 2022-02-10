@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_navi_page.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_tree_page.dart';
 import 'package:lx_base/lx_state.dart';
@@ -13,13 +14,14 @@ class TabSysPage extends StatefulWidget {
 
 class _TabSysPageState extends LxState<TabSysPage>
     with SingleTickerProviderStateMixin {
-  List<String> tabs = ["体系", "导航"];
+  List<String> tabs = [];
 
   TabController? _tabController;
 
   @override
   void initState() {
     super.initState();
+    tabs = [S.current.top_tab_tree, S.current.top_tab_navi];
     _tabController = TabController(length: tabs.length, vsync: this);
   }
 
@@ -54,6 +56,8 @@ class _TabSysPageState extends LxState<TabSysPage>
         isScrollable: true,
         controller: _tabController,
         indicatorColor: Colors.white,
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.grey[200],
         labelStyle: const TextStyle(fontWeight: FontWeight.bold),
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
         indicatorSize: TabBarIndicatorSize.label,

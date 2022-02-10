@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/net/dao/query_dao.dart';
 import 'package:flutter_wan_android/route/router.dart';
@@ -66,6 +67,7 @@ class _QueryPageState
 
   _buildSearchBox() {
     return SearchBox(
+      hintText: S.current.search_box_hint,
       textEditingController: _textEditingController,
       onSubmitted: (value) {
         _submit();
@@ -79,7 +81,7 @@ class _QueryPageState
 
   void _submit() {
     var value = _textEditingController.text;
-    toast("正在搜索: $value");
+    toast(S.current.searching(value));
     setState(() {
       dataList.clear();
       keyword = value;

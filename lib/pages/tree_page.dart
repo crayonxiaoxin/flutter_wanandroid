@@ -85,6 +85,8 @@ class _TreePageState extends LxState<TreePage>
           isScrollable: true,
           controller: _tabController,
           indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey[200],
           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
           indicatorSize: TabBarIndicatorSize.label,

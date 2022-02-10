@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/login_entity.dart';
 import 'package:flutter_wan_android/model/user_info_entity.dart';
 import 'package:flutter_wan_android/net/dao/login_dao.dart';
@@ -62,7 +63,8 @@ class _ProfilePageState extends LxState<ProfilePage> {
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 5)),
                 Text(
-                  "Lv.${coinInfo?.level},  排名: ${coinInfo?.rank ?? 0}",
+                  S.current.profile_level(
+                      coinInfo?.level ?? "", coinInfo?.rank ?? "0"),
                   style: const TextStyle(fontSize: 12, color: Colors.white),
                 )
               ],
@@ -77,11 +79,11 @@ class _ProfilePageState extends LxState<ProfilePage> {
                   }
                 });
               },
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "未登录",
-                  style: TextStyle(
+                  S.current.profile_not_login,
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.white),
@@ -95,20 +97,20 @@ class _ProfilePageState extends LxState<ProfilePage> {
     return ListView(
       children: [
         SettingItem(
-            label: "我的积分",
+            label: S.current.profile_coin,
             desc: "${userInfo?.coinCount}",
             icon: Icons.school_outlined,
             onTap: () {
               MyRouterDelegate.of(context).push(MyRoutePath.coinList());
             }),
         SettingItem(
-            label: "我的分享",
+            label: S.current.profile_share,
             icon: Icons.share,
             onTap: () {
-              toast("敬请期待！");
+              toast(S.current.coming_soon);
             }),
         SettingItem(
-            label: "我的收藏",
+            label: S.current.profile_favorite,
             icon: Icons.favorite_border_outlined,
             onTap: () {
               MyRouterDelegate.of(context).push(LoginDao.isLogin
@@ -116,13 +118,16 @@ class _ProfilePageState extends LxState<ProfilePage> {
                   : MyRoutePath.login());
             }),
         SettingItem(
-            label: "系统设置",
+            label: S.current.profile_settings,
             icon: Icons.settings,
             onTap: () {
               MyRouterDelegate.of(context).push(MyRoutePath.settings());
             }),
         if (LoginDao.isLogin)
-          SettingItem(label: "退出登录", icon: Icons.logout, onTap: _logout)
+          SettingItem(
+              label: S.current.profile_logout,
+              icon: Icons.logout,
+              onTap: _logout)
       ],
     );
   }
@@ -141,11 +146,11 @@ class _ProfilePageState extends LxState<ProfilePage> {
       // false = user must tap button, true = tap outside dialog
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text('提示'),
-          content: Text('您确定要退出登录吗？'),
+          title: Text(S.current.dialog_prompt),
+          content: Text(S.current.dialog_prompt_logout),
           actions: <Widget>[
             TextButton(
-              child: Text('确定'),
+              child: Text(S.current.dialog_yes),
               onPressed: () {
                 LoginDao.logout();
                 Navigator.of(dialogContext).pop();
@@ -153,7 +158,7 @@ class _ProfilePageState extends LxState<ProfilePage> {
               },
             ),
             TextButton(
-              child: Text('取消'),
+              child: Text(S.current.dialog_no),
               onPressed: () {
                 Navigator.of(dialogContext).pop(); // Dismiss alert dialog
               },

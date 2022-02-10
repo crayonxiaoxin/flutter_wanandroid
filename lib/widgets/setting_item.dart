@@ -5,9 +5,17 @@ class SettingItem extends StatelessWidget {
   final IconData? icon;
   final String desc;
   final VoidCallback? onTap;
+  final double? fontSize;
+  final FontWeight fontWeight;
 
   const SettingItem(
-      {Key? key, required this.label, this.icon, this.desc = "", this.onTap})
+      {Key? key,
+      required this.label,
+      this.icon,
+      this.desc = "",
+      this.onTap,
+      this.fontWeight = FontWeight.normal,
+      this.fontSize = 16})
       : super(key: key);
 
   @override
@@ -26,7 +34,10 @@ class SettingItem extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 8),
                     child: Icon(icon, color: Colors.blue, size: 24),
                   ),
-                Text(label)
+                Text(
+                  label,
+                  style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
+                )
               ],
             ),
             Row(

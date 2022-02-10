@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/coin_list_entity.dart';
 import 'package:flutter_wan_android/net/dao/login_dao.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
@@ -49,10 +50,10 @@ class _CoinPageState
                   top: 0,
                   bottom: 0,
                 ),
-                const Center(
+                Center(
                   child: Text(
-                    "我的积分",
-                    style: TextStyle(
+                    S.current.profile_coin,
+                    style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),

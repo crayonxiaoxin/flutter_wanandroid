@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_home_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_qa_page.dart';
@@ -72,10 +73,10 @@ class _MyHomePageState extends LxState<MyHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          _buildBottomTabItem(Icons.home, "首页"),
-          _buildBottomTabItem(Icons.comment, "问答"),
-          _buildBottomTabItem(Icons.local_library, "体系"),
-          _buildBottomTabItem(Icons.face, "我的"),
+          _buildBottomTabItem(Icons.home, S.current.bottom_tab_home),
+          _buildBottomTabItem(Icons.comment, S.current.bottom_tab_qa),
+          _buildBottomTabItem(Icons.local_library, S.current.bottom_tab_tree),
+          _buildBottomTabItem(Icons.face, S.current.bottom_tab_profile),
         ],
         onTap: (index) {
           setState(() {

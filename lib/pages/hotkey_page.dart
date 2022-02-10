@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/hotkey_entity.dart';
 import 'package:flutter_wan_android/net/dao/query_dao.dart';
 import 'package:flutter_wan_android/route/router.dart';
@@ -54,6 +55,7 @@ class _HotkeyPageState
 
   _buildSearchBox() {
     return SearchBox(
+      hintText: S.current.search_box_hint,
       textEditingController: _textEditingController,
       autofocus: true,
       onSubmitted: (value) {
@@ -75,7 +77,7 @@ class _HotkeyPageState
   @override
   Widget get child => ListView(
         children: [
-          TagGroup("热门搜索", children: [
+          TagGroup(S.current.hot_keys, children: [
             ...dataList.map((e) => TagGroupItem(
                   e.name,
                   onPressed: () {

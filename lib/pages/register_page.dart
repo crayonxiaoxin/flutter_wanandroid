@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/net/dao/login_dao.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_base/lx_state.dart';
@@ -40,10 +41,10 @@ class _RegisterPageState extends LxState<RegisterPage> {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Stack(
             children: [
-              const Center(
+              Center(
                 child: Text(
-                  "注册",
-                  style: TextStyle(
+                  S.current.register,
+                  style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -57,7 +58,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                     },
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("登录",
+                      child: Text(S.current.login,
                           style: TextStyle(color: Colors.grey[200]!)),
                     ),
                   ))
@@ -94,7 +95,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                   _focusNode.requestFocus();
                 },
                 decoration: InputDecoration(
-                    labelText: "用户名",
+                    labelText: S.current.username,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -116,7 +117,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                   _focusNodeRePass.requestFocus();
                 },
                 decoration: InputDecoration(
-                    labelText: "密码",
+                    labelText: S.current.password,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -138,7 +139,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                   _register();
                 },
                 decoration: InputDecoration(
-                    labelText: "确认密码",
+                    labelText: S.current.password_confirm,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -154,9 +155,9 @@ class _RegisterPageState extends LxState<RegisterPage> {
                 child: Container(
                     height: 50,
                     alignment: Alignment.center,
-                    child: const Text(
-                      "注册",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    child: Text(
+                      S.current.register,
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                     )),
               ),
             ),
@@ -170,15 +171,15 @@ class _RegisterPageState extends LxState<RegisterPage> {
 
   _register() async {
     if (_username.isEmpty || _password.isEmpty) {
-      toast("用户名或密码不能为空");
+      toast(S.current.username_password_empty);
     } else if (_password != _rePassword) {
-      toast("两次密码输入不一致！");
+      toast(S.current.password_confirm_failed);
     } else {
       var res = await LoginDao.login(_username, _password);
       if (res.errorCode != 0) {
-        toast("注册失败：${res.errorMsg}");
+        toast(S.current.register_failed(res.errorMsg ?? ""));
       } else {
-        toast("注册成功！");
+        toast(S.current.register_success);
       }
     }
   }

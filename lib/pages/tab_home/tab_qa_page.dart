@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
@@ -24,12 +25,12 @@ class _TabQaPageState
     child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Stack(
-        children: const [
+        children: [
           Center(
             child: Text(
-              "问答",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              S.current.bottom_tab_qa,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
         ],

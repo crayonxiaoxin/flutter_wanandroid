@@ -29,6 +29,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ## 国际化
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
   ## 引用本地库
   lx_base:
     path: ./component/lx_base
@@ -66,6 +70,9 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  ## 国际化
+  generate: true
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -101,3 +108,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

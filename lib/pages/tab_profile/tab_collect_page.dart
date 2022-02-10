@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/collect_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
@@ -25,12 +26,12 @@ class _CollectListPageState
     child: Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Stack(
-        children: const [
+        children: [
           Center(
             child: Text(
-              "我的收藏",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              S.current.profile_favorite,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
         ],

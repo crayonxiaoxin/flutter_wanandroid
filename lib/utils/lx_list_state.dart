@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -55,12 +56,12 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
         backgroundColor: Colors.blue,
         distance: 100,
       ),
-      footer: const ClassicFooter(
-        loadingText: "加载中...",
-        canLoadingText: "上拉加载更多",
-        failedText: "加载失败，请重试",
-        idleText: "加载完成",
-        noDataText: "没有更多了",
+      footer: ClassicFooter(
+        loadingText: S.current.loading,
+        canLoadingText: S.current.load_more,
+        failedText: S.current.load_failed,
+        idleText: S.current.load_complete,
+        noDataText: S.current.load_no_data,
       ),
       enablePullUp: enablePullUp,
       child: child,

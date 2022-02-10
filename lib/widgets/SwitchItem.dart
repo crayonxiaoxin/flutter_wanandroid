@@ -49,7 +49,7 @@ class _SwitchItemState extends State<SwitchItem> {
             children: [
               Text(widget.label,
                   style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: widget.disabled ? Colors.grey : null)),
               if (isNotEmpty(widget.desc))

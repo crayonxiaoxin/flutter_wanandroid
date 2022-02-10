@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/net/dao/login_dao.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_base/lx_state.dart';
@@ -37,10 +38,10 @@ class _LoginPageState extends LxState<LoginPage> {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Stack(
             children: [
-              const Center(
+              Center(
                 child: Text(
-                  "登录",
-                  style: TextStyle(
+                  S.current.login,
+                  style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -54,7 +55,7 @@ class _LoginPageState extends LxState<LoginPage> {
                     },
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("注册",
+                      child: Text(S.current.register,
                           style: TextStyle(color: Colors.grey[200]!)),
                     ),
                   ))
@@ -91,7 +92,7 @@ class _LoginPageState extends LxState<LoginPage> {
                   _focusNode.requestFocus();
                 },
                 decoration: InputDecoration(
-                    labelText: "用户名",
+                    labelText: S.current.username,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -113,7 +114,7 @@ class _LoginPageState extends LxState<LoginPage> {
                   _login();
                 },
                 decoration: InputDecoration(
-                    labelText: "密码",
+                    labelText: S.current.password,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -129,9 +130,9 @@ class _LoginPageState extends LxState<LoginPage> {
                 child: Container(
                     height: 50,
                     alignment: Alignment.center,
-                    child: const Text(
-                      "登录",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    child: Text(
+                      S.current.login,
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                     )),
               ),
             ),
@@ -145,12 +146,13 @@ class _LoginPageState extends LxState<LoginPage> {
 
   _login() async {
     if (_username.isEmpty || _password.isEmpty) {
-      toast("用户名或密码不能为空");
+      toast(S.current.username_password_empty);
     } else {
       var res = await LoginDao.login(_username, _password);
       if (res.errorCode != 0) {
-        toast("登录失败：${res.errorMsg}");
+        toast(S.current.login_failed(res.errorMsg ?? ""));
       } else if (LoginDao.isLogin) {
+        toast(S.current.login_success);
         MyRouterDelegate.of(context).pop(result: LoginDao.isLogin);
       }
     }

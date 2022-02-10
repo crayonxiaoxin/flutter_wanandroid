@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
@@ -34,11 +35,11 @@ class _TabHomePageState
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Stack(
           children: [
-            const Center(
+            Center(
               child: Text(
-                "玩安卓",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                S.current.app_name,
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
             Positioned(

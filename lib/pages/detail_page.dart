@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
@@ -45,7 +46,7 @@ class _DetailPageState extends LxState<DetailPage> {
             onPressed: () {
               FlutterClipboard.copy(
                       "${widget.model?.title}:\n${widget.model?.url}")
-                  .then((value) => toast("已将链接复制至剪贴板"));
+                  .then((value) => toast(S.current.copy_clipboard));
             },
             child: const Icon(Icons.share),
           ),
