@@ -101,7 +101,8 @@ abstract class LxListState<Model, Entity, T extends StatefulWidget>
       if (list.isEmpty) {
         isLoadAll = true;
         _refreshController.loadNoData();
-      } else if (list.length < pageSize) {
+      } else if (list.length < pageSize / 2) {
+        // 当前数据少于半页时，认为没有更多数据了
         _refreshController.loadNoData();
       } else {
         _currentPage++;
