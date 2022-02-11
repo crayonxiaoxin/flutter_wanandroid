@@ -4,7 +4,6 @@ import 'package:flutter_wan_android/pages/tab_home/tab_home_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_qa_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_sys_page.dart';
-import 'package:flutter_wan_android/provider/language_provider.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +76,6 @@ class _MyHomePageState extends LxState<MyHomePage> {
   @override
   void didChangeDependencies() {
     context.read<ThemeProvider>().systemDarkModeChange();
-    context.read<LanguageProvider>().systemLanguageChange();
     super.didChangeDependencies();
   }
 }

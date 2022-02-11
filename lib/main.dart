@@ -82,8 +82,8 @@ class MyApp extends StatelessWidget {
               locale: langProvider.currentLocale(),
               localeResolutionCallback:
                   (Locale? locale, Iterable<Locale> supportedLocales) {
-                print("localeResolutionCallback：$locale");
-                // langProvider.systemLanguageChange();
+                // 监听系统语言变化，跟随系统变化
+                return langProvider.currentLocale();
               },
             );
           }),
