@@ -146,6 +146,7 @@ class _SettingsPageState extends LxState<SettingsPage> {
       list.add(_languageItem(value,
           isSelected: element.key == langProvider.currentLanguage(), onTap: () {
         langProvider.setLanguage(element.key);
+        Navigator.of(context).pop();
       }));
     }
     return list;
