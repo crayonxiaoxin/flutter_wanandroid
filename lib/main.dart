@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_wan_android/net/interceptor/response_interceptor.dart';
+import 'package:flutter_wan_android/provider/home_provider.dart';
 import 'package:flutter_wan_android/provider/language_provider.dart';
 import 'package:flutter_wan_android/provider/providers.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
@@ -53,10 +54,12 @@ class MyApp extends StatelessWidget {
               );
         return MultiProvider(
           providers: providers,
-          child: Consumer2<ThemeProvider, LanguageProvider>(builder: (
+          child: Consumer3<ThemeProvider, LanguageProvider, HomeProvider>(
+              builder: (
             BuildContext context,
             ThemeProvider themeProvider,
             LanguageProvider langProvider,
+            HomeProvider homeProvider,
             Widget? child,
           ) {
             return MaterialApp(
@@ -74,7 +77,7 @@ class MyApp extends StatelessWidget {
               ],
               supportedLocales: S.delegate.supportedLocales,
               onGenerateTitle: (context) {
-                return S.current.app_name;
+                return S.of(context).app_name;
               },
               locale: langProvider.currentLocale(),
               localeResolutionCallback:

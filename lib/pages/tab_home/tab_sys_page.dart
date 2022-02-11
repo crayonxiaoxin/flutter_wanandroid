@@ -34,6 +34,7 @@ class _TabSysPageState extends LxState<TabSysPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    tabs = [S.of(context).top_tab_tree, S.of(context).top_tab_navi];
     return Scaffold(
       appBar: ImmersiveAppBar(
         gradient: const LinearGradient(

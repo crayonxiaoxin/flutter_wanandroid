@@ -4,7 +4,7 @@ import 'package:flutter_wan_android/pages/tab_home/tab_home_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_qa_page.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_sys_page.dart';
-import 'package:flutter_wan_android/provider/home_provider.dart';
+import 'package:flutter_wan_android/provider/language_provider.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:provider/provider.dart';
@@ -32,34 +32,27 @@ class _MyHomePageState extends LxState<MyHomePage> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Consumer<HomeProvider>(
-        builder: (
-          BuildContext context,
-          HomeProvider value,
-          Widget? child,
-        ) {
-          return PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            children: const [
-              TabHomePage(),
-              TabQaPage(),
-              TabSysPage(),
-              ProfilePage()
-            ],
-          );
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
         },
+        children: const [
+          TabHomePage(),
+          TabQaPage(),
+          TabSysPage(),
+          ProfilePage()
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          _buildBottomTabItem(Icons.home, S.current.bottom_tab_home),
-          _buildBottomTabItem(Icons.comment, S.current.bottom_tab_qa),
-          _buildBottomTabItem(Icons.local_library, S.current.bottom_tab_tree),
-          _buildBottomTabItem(Icons.face, S.current.bottom_tab_profile),
+          _buildBottomTabItem(Icons.home, S.of(context).bottom_tab_home),
+          _buildBottomTabItem(Icons.comment, S.of(context).bottom_tab_qa),
+          _buildBottomTabItem(
+              Icons.local_library, S.of(context).bottom_tab_tree),
+          _buildBottomTabItem(Icons.face, S.of(context).bottom_tab_profile),
         ],
         onTap: (index) {
           setState(() {
@@ -77,19 +70,14 @@ class _MyHomePageState extends LxState<MyHomePage> {
 
   BottomNavigationBarItem _buildBottomTabItem(IconData icon, String label) {
     return BottomNavigationBarItem(
-        icon: Icon(
-          icon,
-        ),
-        activeIcon: Icon(
-          icon,
-        ),
-        label: label);
+        icon: Icon(icon), activeIcon: Icon(icon), label: label);
   }
 
   /// 监听系统主题变化
   @override
   void didChangeDependencies() {
     context.read<ThemeProvider>().systemDarkModeChange();
+    context.read<LanguageProvider>().systemLanguageChange();
     super.didChangeDependencies();
   }
 }

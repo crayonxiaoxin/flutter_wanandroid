@@ -45,7 +45,7 @@ class _QueryPageState
             alignment: Alignment.center,
             child: Row(
               children: [
-                Expanded(child: _buildSearchBox()),
+                Expanded(child: _buildSearchBox(context)),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: InkWell(
@@ -65,9 +65,9 @@ class _QueryPageState
   final OutlineInputBorder _border = const OutlineInputBorder(
       gapPadding: 0, borderSide: BorderSide(color: Colors.transparent));
 
-  _buildSearchBox() {
+  _buildSearchBox(BuildContext context) {
     return SearchBox(
-      hintText: S.current.search_box_hint,
+      hintText: S.of(context).search_box_hint,
       textEditingController: _textEditingController,
       onSubmitted: (value) {
         _submit();
@@ -81,7 +81,7 @@ class _QueryPageState
 
   void _submit() {
     var value = _textEditingController.text;
-    toast(S.current.searching(value));
+    toast(S.of(context).searching(value));
     setState(() {
       dataList.clear();
       keyword = value;

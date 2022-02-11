@@ -63,7 +63,7 @@ class _ProfilePageState extends LxState<ProfilePage> {
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 5)),
                 Text(
-                  S.current.profile_level(
+                  S.of(context).profile_level(
                       coinInfo?.level ?? "", coinInfo?.rank ?? "0"),
                   style: const TextStyle(fontSize: 12, color: Colors.white),
                 )
@@ -82,7 +82,7 @@ class _ProfilePageState extends LxState<ProfilePage> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  S.current.profile_not_login,
+                  S.of(context).profile_not_login,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -97,20 +97,20 @@ class _ProfilePageState extends LxState<ProfilePage> {
     return ListView(
       children: [
         SettingItem(
-            label: S.current.profile_coin,
+            label: S.of(context).profile_coin,
             desc: "${userInfo?.coinCount}",
             icon: Icons.school_outlined,
             onTap: () {
               MyRouterDelegate.of(context).push(MyRoutePath.coinList());
             }),
         SettingItem(
-            label: S.current.profile_share,
+            label: S.of(context).profile_share,
             icon: Icons.share,
             onTap: () {
-              toast(S.current.coming_soon);
+              toast(S.of(context).coming_soon);
             }),
         SettingItem(
-            label: S.current.profile_favorite,
+            label: S.of(context).profile_favorite,
             icon: Icons.favorite_border_outlined,
             onTap: () {
               MyRouterDelegate.of(context).push(LoginDao.isLogin
@@ -118,14 +118,14 @@ class _ProfilePageState extends LxState<ProfilePage> {
                   : MyRoutePath.login());
             }),
         SettingItem(
-            label: S.current.profile_settings,
+            label: S.of(context).profile_settings,
             icon: Icons.settings,
             onTap: () {
               MyRouterDelegate.of(context).push(MyRoutePath.settings());
             }),
         if (LoginDao.isLogin)
           SettingItem(
-              label: S.current.profile_logout,
+              label: S.of(context).profile_logout,
               icon: Icons.logout,
               onTap: _logout)
       ],
@@ -146,11 +146,11 @@ class _ProfilePageState extends LxState<ProfilePage> {
       // false = user must tap button, true = tap outside dialog
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text(S.current.dialog_prompt),
-          content: Text(S.current.dialog_prompt_logout),
+          title: Text(S.of(context).dialog_prompt),
+          content: Text(S.of(context).dialog_prompt_logout),
           actions: <Widget>[
             TextButton(
-              child: Text(S.current.dialog_yes),
+              child: Text(S.of(context).dialog_yes),
               onPressed: () {
                 LoginDao.logout();
                 Navigator.of(dialogContext).pop();
@@ -158,7 +158,7 @@ class _ProfilePageState extends LxState<ProfilePage> {
               },
             ),
             TextButton(
-              child: Text(S.current.dialog_no),
+              child: Text(S.of(context).dialog_no),
               onPressed: () {
                 Navigator.of(dialogContext).pop(); // Dismiss alert dialog
               },

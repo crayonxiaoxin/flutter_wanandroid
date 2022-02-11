@@ -40,7 +40,7 @@ class _LoginPageState extends LxState<LoginPage> {
             children: [
               Center(
                 child: Text(
-                  S.current.login,
+                  S.of(context).login,
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -55,7 +55,7 @@ class _LoginPageState extends LxState<LoginPage> {
                     },
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(S.current.register,
+                      child: Text(S.of(context).register,
                           style: TextStyle(color: Colors.grey[200]!)),
                     ),
                   ))
@@ -92,7 +92,7 @@ class _LoginPageState extends LxState<LoginPage> {
                   _focusNode.requestFocus();
                 },
                 decoration: InputDecoration(
-                    labelText: S.current.username,
+                    labelText: S.of(context).username,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -114,7 +114,7 @@ class _LoginPageState extends LxState<LoginPage> {
                   _login();
                 },
                 decoration: InputDecoration(
-                    labelText: S.current.password,
+                    labelText: S.of(context).password,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -131,7 +131,7 @@ class _LoginPageState extends LxState<LoginPage> {
                     height: 50,
                     alignment: Alignment.center,
                     child: Text(
-                      S.current.login,
+                      S.of(context).login,
                       style: const TextStyle(fontSize: 16, color: Colors.white),
                     )),
               ),
@@ -146,13 +146,13 @@ class _LoginPageState extends LxState<LoginPage> {
 
   _login() async {
     if (_username.isEmpty || _password.isEmpty) {
-      toast(S.current.username_password_empty);
+      toast(S.of(context).username_password_empty);
     } else {
       var res = await LoginDao.login(_username, _password);
       if (res.errorCode != 0) {
-        toast(S.current.login_failed(res.errorMsg ?? ""));
+        toast(S.of(context).login_failed(res.errorMsg ?? ""));
       } else if (LoginDao.isLogin) {
-        toast(S.current.login_success);
+        toast(S.of(context).login_success);
         MyRouterDelegate.of(context).pop(result: LoginDao.isLogin);
       }
     }

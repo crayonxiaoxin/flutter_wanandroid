@@ -37,7 +37,7 @@ class _TabHomePageState
           children: [
             Center(
               child: Text(
-                S.current.app_name,
+                S.of(context).app_name,
                 style: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),

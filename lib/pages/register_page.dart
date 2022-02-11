@@ -43,7 +43,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
             children: [
               Center(
                 child: Text(
-                  S.current.register,
+                  S.of(context).register,
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -58,7 +58,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                     },
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(S.current.login,
+                      child: Text(S.of(context).login,
                           style: TextStyle(color: Colors.grey[200]!)),
                     ),
                   ))
@@ -95,7 +95,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                   _focusNode.requestFocus();
                 },
                 decoration: InputDecoration(
-                    labelText: S.current.username,
+                    labelText: S.of(context).username,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -117,7 +117,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                   _focusNodeRePass.requestFocus();
                 },
                 decoration: InputDecoration(
-                    labelText: S.current.password,
+                    labelText: S.of(context).password,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -139,7 +139,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                   _register();
                 },
                 decoration: InputDecoration(
-                    labelText: S.current.password_confirm,
+                    labelText: S.of(context).password_confirm,
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
@@ -156,7 +156,7 @@ class _RegisterPageState extends LxState<RegisterPage> {
                     height: 50,
                     alignment: Alignment.center,
                     child: Text(
-                      S.current.register,
+                      S.of(context).register,
                       style: const TextStyle(fontSize: 16, color: Colors.white),
                     )),
               ),
@@ -171,15 +171,15 @@ class _RegisterPageState extends LxState<RegisterPage> {
 
   _register() async {
     if (_username.isEmpty || _password.isEmpty) {
-      toast(S.current.username_password_empty);
+      toast(S.of(context).username_password_empty);
     } else if (_password != _rePassword) {
-      toast(S.current.password_confirm_failed);
+      toast(S.of(context).password_confirm_failed);
     } else {
       var res = await LoginDao.login(_username, _password);
       if (res.errorCode != 0) {
-        toast(S.current.register_failed(res.errorMsg ?? ""));
+        toast(S.of(context).register_failed(res.errorMsg ?? ""));
       } else {
-        toast(S.current.register_success);
+        toast(S.of(context).register_success);
       }
     }
   }

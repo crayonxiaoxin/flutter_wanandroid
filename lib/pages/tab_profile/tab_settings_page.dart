@@ -26,16 +26,16 @@ class _SettingsPageState extends LxState<SettingsPage> {
     var langProvider = context.watch<LanguageProvider>();
     var _currentLanguage = langProvider.currentLanguageString();
     if (_currentLanguage == "system") {
-      _currentLanguage = S.current.settings_follow_system;
+      _currentLanguage = S.of(context).settings_follow_system;
     }
     return Scaffold(
       appBar: _appBar(),
       body: ListView(
         children: [
           SwitchItem(
-            label: S.current.settings_follow_system,
+            label: S.of(context).settings_follow_system,
             value: themeProvider.isFollowSystem(),
-            desc: S.current.settings_follow_system_desc,
+            desc: S.of(context).settings_follow_system_desc,
             onChanged: (value) {
               if (value) {
                 themeProvider.setTheme(ThemeMode.system);
@@ -45,7 +45,7 @@ class _SettingsPageState extends LxState<SettingsPage> {
             },
           ),
           SwitchItem(
-            label: S.current.settings_dark_mode,
+            label: S.of(context).settings_dark_mode,
             value: themeProvider.isDarkMode(),
             disabled: themeProvider.isFollowSystem(),
             onChanged: (value) {
@@ -57,23 +57,23 @@ class _SettingsPageState extends LxState<SettingsPage> {
             },
           ),
           SwitchItem(
-            label: S.current.settings_home_banner,
+            label: S.of(context).settings_home_banner,
             value: homeProvider.canShowBanner(),
-            desc: S.current.settings_home_banner_desc,
+            desc: S.of(context).settings_home_banner_desc,
             onChanged: (value) {
               homeProvider.showBanner(show: value);
             },
           ),
           SwitchItem(
-            label: S.current.settings_home_top_articles,
-            desc: S.current.settings_home_top_articles_desc,
+            label: S.of(context).settings_home_top_articles,
+            desc: S.of(context).settings_home_top_articles_desc,
             value: homeProvider.canShowTopArticles(),
             onChanged: (value) {
               homeProvider.showTopArticles(show: value);
             },
           ),
           SettingItem(
-              label: S.current.switch_language,
+              label: S.of(context).switch_language,
               desc: _currentLanguage,
               fontWeight: FontWeight.bold,
               onTap: _switchLanguage),
@@ -95,7 +95,7 @@ class _SettingsPageState extends LxState<SettingsPage> {
           children: [
             Center(
               child: Text(
-                S.current.settings,
+                S.of(context).settings,
                 style: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -117,7 +117,7 @@ class _SettingsPageState extends LxState<SettingsPage> {
               children: [
                 ListTile(
                   title: Text(
-                    S.current.switch_language,
+                    S.of(context).switch_language,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   leading: const Icon(Icons.translate, color: primary),
@@ -141,7 +141,7 @@ class _SettingsPageState extends LxState<SettingsPage> {
     var list = [];
     for (var element in supportedLanguages.entries) {
       var value = element.key == "system"
-          ? S.current.settings_follow_system
+          ? S.of(context).settings_follow_system
           : element.value;
       list.add(_languageItem(value,
           isSelected: element.key == langProvider.currentLanguage(), onTap: () {

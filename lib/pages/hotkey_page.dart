@@ -35,7 +35,7 @@ class _HotkeyPageState
             child: Row(
               children: [
                 Expanded(
-                  child: _buildSearchBox(),
+                  child: _buildSearchBox(context),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -53,9 +53,9 @@ class _HotkeyPageState
     );
   }
 
-  _buildSearchBox() {
+  _buildSearchBox(BuildContext context) {
     return SearchBox(
-      hintText: S.current.search_box_hint,
+      hintText: S.of(context).search_box_hint,
       textEditingController: _textEditingController,
       autofocus: true,
       onSubmitted: (value) {
@@ -77,7 +77,7 @@ class _HotkeyPageState
   @override
   Widget get child => ListView(
         children: [
-          TagGroup(S.current.hot_keys, children: [
+          TagGroup(S.of(context).hot_keys, children: [
             ...dataList.map((e) => TagGroupItem(
                   e.name,
                   onPressed: () {

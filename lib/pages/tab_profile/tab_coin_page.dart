@@ -52,7 +52,7 @@ class _CoinPageState
                 ),
                 Center(
                   child: Text(
-                    S.current.profile_coin,
+                    S.of(context).profile_coin,
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),

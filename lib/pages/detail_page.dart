@@ -46,7 +46,7 @@ class _DetailPageState extends LxState<DetailPage> {
             onPressed: () {
               FlutterClipboard.copy(
                       "${widget.model?.title}:\n${widget.model?.url}")
-                  .then((value) => toast(S.current.copy_clipboard));
+                  .then((value) => toast(S.of(context).copy_clipboard));
             },
             child: const Icon(Icons.share),
           ),
