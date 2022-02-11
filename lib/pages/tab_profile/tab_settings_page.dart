@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/provider/home_provider.dart';
+import 'package:flutter_wan_android/provider/language_provider.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/utils/color.dart';
 import 'package:flutter_wan_android/widgets/SwitchItem.dart';
@@ -22,6 +23,11 @@ class _SettingsPageState extends LxState<SettingsPage> {
     super.build(context);
     var themeProvider = context.watch<ThemeProvider>();
     var homeProvider = context.watch<HomeProvider>();
+    var langProvider = context.watch<LanguageProvider>();
+    var _currentLanguage = langProvider.currentLanguageString();
+    if (_currentLanguage == "system") {
+      _currentLanguage = S.current.settings_follow_system;
+    }
     return Scaffold(
       appBar: _appBar(),
       body: ListView(
@@ -67,8 +73,8 @@ class _SettingsPageState extends LxState<SettingsPage> {
             },
           ),
           SettingItem(
-              label: "切换语言",
-              desc: "跟随系统",
+              label: S.current.switch_language,
+              desc: _currentLanguage,
               fontWeight: FontWeight.bold,
               onTap: _switchLanguage),
         ],
@@ -104,24 +110,19 @@ class _SettingsPageState extends LxState<SettingsPage> {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Container(
+          var langProvider = context.watch<LanguageProvider>();
+          return SizedBox(
             height: 300,
             child: ListView(
               children: [
-                const ListTile(
+                ListTile(
                   title: Text(
-                    "切换语言",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    S.current.switch_language,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  leading: Icon(
-                    Icons.translate,
-                    color: primary,
-                  ),
+                  leading: const Icon(Icons.translate, color: primary),
                 ),
-                _languageItem("跟随系统", isSelected: true, onTap: () {}),
-                _languageItem("简体中文", onTap: () {}),
-                _languageItem("繁體中文", onTap: () {}),
-                _languageItem("English", onTap: () {}),
+                ..._languageItems(langProvider)
               ],
             ),
           );
@@ -132,12 +133,21 @@ class _SettingsPageState extends LxState<SettingsPage> {
       {bool isSelected = false, VoidCallback? onTap}) {
     return ListTile(
         title: Text(language, style: const TextStyle(fontSize: 14)),
-        trailing: isSelected
-            ? const Icon(
-                Icons.done,
-                color: primary,
-              )
-            : null,
+        trailing: isSelected ? const Icon(Icons.done, color: primary) : null,
         onTap: onTap);
+  }
+
+  _languageItems(LanguageProvider langProvider) {
+    var list = [];
+    for (var element in supportedLanguages.entries) {
+      var value = element.key == "system"
+          ? S.current.settings_follow_system
+          : element.value;
+      list.add(_languageItem(value,
+          isSelected: element.key == langProvider.currentLanguage(), onTap: () {
+        langProvider.setLanguage(element.key);
+      }));
+    }
+    return list;
   }
 }

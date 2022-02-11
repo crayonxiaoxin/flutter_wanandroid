@@ -45,5 +45,6 @@
   "copy_clipboard": "Link copied to clipboard",
   "hot_keys": "Popular Searches",
   "search_box_hint": "Separate keywords with spaces",
-  "searching": "Searching: {keyword}"
+  "searching": "Searching: {keyword}",
+  "switch_language": "Switch Language"
 }

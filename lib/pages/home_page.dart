@@ -28,23 +28,6 @@ class _MyHomePageState extends LxState<MyHomePage> {
     super.initState();
   }
 
-  void _incrementCounter() {
-    // LxCache.instance.setString("hello", "value");
-    // String? value = LxCache.instance.get("hello");
-    // print("lx cache value: $value");
-    print("click");
-    // setState(() {
-    //   _counter++;
-    // });
-    // MyRouterDelegate.of(context).push(MyRoutePath.details(),
-    //     onPopResult: (result) {
-    //   toast(result);
-    //   setState(() {
-    //     _counter++;
-    //   });
-    // });
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);

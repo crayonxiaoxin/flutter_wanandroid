@@ -90,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Home Top Articles"),
         "settings_home_top_articles_desc": MessageLookupByLibrary.simpleMessage(
             "Show or Hide Home Top Articles"),
+        "switch_language":
+            MessageLookupByLibrary.simpleMessage("Switch Language"),
         "top_tab_navi": MessageLookupByLibrary.simpleMessage("Navigation"),
         "top_tab_tree": MessageLookupByLibrary.simpleMessage("Tree"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
