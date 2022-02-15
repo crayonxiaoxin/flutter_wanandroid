@@ -16,20 +16,10 @@ var supportedLanguages = {
 class LanguageProvider extends ChangeNotifier {
   var _current;
 
-  void systemLanguageChange() {
-    var localeName = "system";
-    print("system language changed => ${currentLanguage()}");
-    if (currentLanguage() == localeName) {
-      S.load(getLocale(localeName));
-      notifyListeners();
-    }
-  }
-
   /// 当前语言环境
   Locale currentLocale() {
     _current ??= currentLanguage();
     var locale = getLocale(_current);
-    print("locale 666=>$_current , $locale , ${currentLanguage()}");
     return locale;
   }
 
@@ -37,7 +27,6 @@ class LanguageProvider extends ChangeNotifier {
   String currentLanguage() {
     _current ??=
         LxCache.instance.getString(Constants.language, defaultValue: "system");
-    print("locale 667=> $_current");
     return _current;
   }
 
