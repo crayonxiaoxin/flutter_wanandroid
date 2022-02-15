@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/login_entity.dart';
 import 'package:flutter_wan_android/model/user_info_entity.dart';
 import 'package:flutter_wan_android/net/dao/login_dao.dart';
 import 'package:flutter_wan_android/route/router.dart';
+import 'package:flutter_wan_android/utils/native_method.dart';
 import 'package:flutter_wan_android/widgets/setting_item.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/utils/toast.dart';
@@ -101,7 +105,9 @@ class _ProfilePageState extends LxState<ProfilePage> {
             desc: "${userInfo?.coinCount}",
             icon: Icons.school_outlined,
             onTap: () {
-              MyRouterDelegate.of(context).push(MyRoutePath.coinList());
+              MyRouterDelegate.of(context).push(LoginDao.isLogin
+                  ? MyRoutePath.coinList()
+                  : MyRoutePath.login());
             }),
         SettingItem(
             label: S.of(context).profile_share,
@@ -123,6 +129,10 @@ class _ProfilePageState extends LxState<ProfilePage> {
             onTap: () {
               MyRouterDelegate.of(context).push(MyRoutePath.settings());
             }),
+        SettingItem(
+            label: S.of(context).test_native_calls,
+            icon: Icons.code,
+            onTap: _callNative),
         if (LoginDao.isLogin)
           SettingItem(
               label: S.of(context).profile_logout,
@@ -167,5 +177,14 @@ class _ProfilePageState extends LxState<ProfilePage> {
         );
       },
     );
+  }
+
+  /// Flutter 调用 Android 原生方法
+  void _callNative() {
+    if (kIsWeb) return;
+    if (Platform.isAndroid) {
+      nativeAlert("${S.of(context).test_native_calls} AlertDialog");
+      nativeToast("${S.of(context).test_native_calls} Toast");
+    }
   }
 }

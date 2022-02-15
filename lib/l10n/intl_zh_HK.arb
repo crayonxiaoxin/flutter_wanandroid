@@ -46,5 +46,6 @@
   "hot_keys": "熱門搜索",
   "search_box_hint": "支持多個關鍵詞，請用空格隔開",
   "searching": "正在搜索: {keyword}",
-  "switch_language": "切換語言"
+  "switch_language": "切換語言",
+  "test_native_calls": "測試原生方法調用"
 }

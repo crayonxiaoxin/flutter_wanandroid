@@ -81,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings_home_top_articles_desc":
             MessageLookupByLibrary.simpleMessage("是否显示首页置顶文章"),
         "switch_language": MessageLookupByLibrary.simpleMessage("切换语言"),
+        "test_native_calls": MessageLookupByLibrary.simpleMessage("测试原生方法调用"),
         "top_tab_navi": MessageLookupByLibrary.simpleMessage("导航"),
         "top_tab_tree": MessageLookupByLibrary.simpleMessage("体系"),
         "username": MessageLookupByLibrary.simpleMessage("用户名"),

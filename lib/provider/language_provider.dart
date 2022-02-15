@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_wan_android/constants.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:lx_cache/lx_cache.dart';
@@ -61,7 +62,10 @@ class LanguageProvider extends ChangeNotifier {
 
   /// 通过语言环境名称 获取语言环境
   Locale getLocale(String localeName) {
-    if (localeName == "system") localeName = Platform.localeName;
+    if (localeName == "system") {
+      // 如果是web，默认系统是简体中文
+      localeName = kIsWeb ? "zh" : Platform.localeName;
+    }
     if (localeName == "zh_TW") localeName = "zh_HK";
     if (localeName == "zh_CN") localeName = "zh";
     for (var element in supportedLanguages.entries) {

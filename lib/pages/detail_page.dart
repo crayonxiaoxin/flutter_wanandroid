@@ -50,11 +50,10 @@ class _DetailPageState extends LxState<DetailPage> {
             },
             child: const Icon(Icons.share),
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           appBar: ImmersiveAppBar(
             gradient: const LinearGradient(
-              colors: [Colors.blueAccent, Colors.lightBlueAccent],
-            ),
+                colors: [Colors.blueAccent, Colors.lightBlueAccent]),
             elevation: 2.0,
             leading: const BackButton(color: Colors.white),
             child: Center(

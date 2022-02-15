@@ -92,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Show or Hide Home Top Articles"),
         "switch_language":
             MessageLookupByLibrary.simpleMessage("Switch Language"),
+        "test_native_calls":
+            MessageLookupByLibrary.simpleMessage("Test Native Calls"),
         "top_tab_navi": MessageLookupByLibrary.simpleMessage("Navigation"),
         "top_tab_tree": MessageLookupByLibrary.simpleMessage("Tree"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),

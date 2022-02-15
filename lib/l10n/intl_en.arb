@@ -46,5 +46,6 @@
   "hot_keys": "Popular Searches",
   "search_box_hint": "Separate keywords with spaces",
   "searching": "Searching: {keyword}",
-  "switch_language": "Switch Language"
+  "switch_language": "Switch Language",
+  "test_native_calls": "Test Native Calls"
 }

@@ -529,6 +529,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Test Native Calls`
+  String get test_native_calls {
+    return Intl.message(
+      'Test Native Calls',
+      name: 'test_native_calls',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
