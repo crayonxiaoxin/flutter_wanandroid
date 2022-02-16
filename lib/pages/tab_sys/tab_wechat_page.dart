@@ -45,7 +45,7 @@ class _TabWechatPageState
             args: {"id": item.id ?? 0, "name": item.name ?? ""});
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        padding: const EdgeInsets.all(16.0),
         child: Text("${item.name}", style: const TextStyle(fontSize: 14)),
       ),
     );

@@ -124,10 +124,15 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
   }
 
   Row _articleItemTop() {
-    var username =
-        (widget.item.author != null && widget.item.author!.isNotEmpty)
-            ? widget.item.author
-            : widget.item.shareUser;
+    var username;
+    var niceDate;
+    if (widget.item.author != null && widget.item.author!.isNotEmpty) {
+      username = widget.item.author;
+      niceDate = widget.item.niceDate;
+    } else {
+      username = widget.item.shareUser;
+      niceDate = widget.item.niceShareDate;
+    }
     return Row(
       children: [
         Expanded(
@@ -144,7 +149,7 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
             ],
           ),
         ),
-        Text("${widget.item.niceShareDate}",
+        Text("$niceDate",
             style: const TextStyle(fontSize: 12, color: Colors.grey))
       ],
     );
