@@ -6,14 +6,16 @@ import 'package:flutter_wan_android/widgets/url_utils.dart';
 import 'package:lx_base/utils/html_utils.dart';
 import 'package:lx_base/utils/string_utils.dart';
 import 'package:lx_base/utils/toast.dart';
+import 'package:lx_base/widget/adaptive_container.dart';
+import 'package:lx_base/widget/cached_image.dart';
 import 'package:provider/src/provider.dart';
 
-class ArticleItemCard extends StatefulWidget {
+class ProjectItemCard extends StatefulWidget {
   final HomeArticleDatas item;
   final bool showDetail;
   final ValueChanged<bool>? onCollect;
 
-  const ArticleItemCard(
+  const ProjectItemCard(
     this.item, {
     Key? key,
     this.showDetail = false,
@@ -21,10 +23,10 @@ class ArticleItemCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ArticleItemCard> createState() => _ArticleItemCardState();
+  State<ProjectItemCard> createState() => _ProjectItemCardState();
 }
 
-class _ArticleItemCardState extends State<ArticleItemCard> {
+class _ProjectItemCardState extends State<ProjectItemCard> {
   bool isCollected = false;
 
   @override
@@ -41,7 +43,7 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
   Widget _articleItem(BuildContext context) {
     var themeProvider = context.watch<ThemeProvider>();
     return Container(
-      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
+      margin: const EdgeInsets.only(left: 8, right: 8, bottom: 0),
       child: Material(
         color: themeProvider.isDarkMode() ? null : Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -55,14 +57,7 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _articleItemTop(),
-                _articleItemCenter(),
-                _articleItemBottom()
-              ],
-            ),
+            child: _articleItemCenter(),
           ),
         ),
       ),
@@ -72,58 +67,57 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
   Padding _articleItemCenter() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(parseHtml(widget.item.title),
-              style:
-                  const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          if (widget.showDetail && isNotEmpty(widget.item.desc))
-            Container(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(parseHtml(widget.item.desc),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  )),
+          SizedBox(
+              width: 120,
+              child: AdaptiveContainer(
+                  aspectRatio: 9 / 16,
+                  child: CachedImage(widget.item.envelopePic))),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: 8.0),
+              height: 120 / (9 / 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(parseHtml(widget.item.title),
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      if (widget.showDetail && isNotEmpty(widget.item.desc))
+                        Container(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(parseHtml(widget.item.desc),
+                              maxLines: 6,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              )),
+                        ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [..._articleItemTop()],
+                  )
+                ],
+              ),
             ),
+          )
         ],
       ),
     );
   }
 
-  Row _articleItemBottom() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            if (widget.item.type == 1)
-              const Text(
-                "置顶  ",
-                style: TextStyle(fontSize: 12, color: Colors.orangeAccent),
-              ),
-            Text(
-              "${widget.item.superChapterName} · ${widget.item.chapterName}",
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            )
-          ],
-        ),
-        InkWell(
-          onTap: () {
-            _favorite(widget.item);
-          },
-          child: isCollected
-              ? const Icon(Icons.favorite, color: Colors.redAccent)
-              : const Icon(Icons.favorite_border, color: Colors.grey),
-        )
-      ],
-    );
-  }
-
-  Row _articleItemTop() {
+  _articleItemTop() {
     var username;
     var niceDate;
     if (widget.item.author != null && widget.item.author!.isNotEmpty) {
@@ -133,26 +127,37 @@ class _ArticleItemCardState extends State<ArticleItemCard> {
       username = widget.item.shareUser;
       niceDate = widget.item.niceShareDate;
     }
-    return Row(
-      children: [
-        Expanded(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Text(
-                  "$username",
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ),
-              ..._articleTags(widget.item.tags)
-            ],
+    return [
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, bottom: 8),
+            child: Text(
+              "$username",
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
           ),
-        ),
-        Text("$niceDate",
-            style: const TextStyle(fontSize: 12, color: Colors.grey))
-      ],
-    );
+          ..._articleTags(widget.item.tags)
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("$niceDate",
+              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          InkWell(
+            onTap: () {
+              _favorite(widget.item);
+            },
+            child: isCollected
+                ? const Icon(Icons.favorite, color: Colors.redAccent)
+                : const Icon(Icons.favorite_border, color: Colors.grey),
+          )
+        ],
+      ),
+    ];
   }
 
   _articleTags(List<HomeArticleDatasTags>? tags) {

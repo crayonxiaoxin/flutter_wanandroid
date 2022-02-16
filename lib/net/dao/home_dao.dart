@@ -7,6 +7,7 @@ import 'package:flutter_wan_android/net/request/collect_request.dart';
 import 'package:flutter_wan_android/net/request/home_article_request.dart';
 import 'package:flutter_wan_android/net/request/home_banner_request.dart';
 import 'package:flutter_wan_android/net/request/home_top_article_request.dart';
+import 'package:flutter_wan_android/net/request/project_request.dart';
 import 'package:flutter_wan_android/net/request/qa_request.dart';
 import 'package:flutter_wan_android/net/request/uncollect_request.dart';
 import 'package:flutter_wan_android/net/request/wx_article_request.dart';
@@ -55,6 +56,15 @@ class HomeDao {
       {int page = 1, int pageSize = 20}) async {
     var request = WxArticleRequest(page, publicId);
     request.addParam("page_size", pageSize);
+    var response = await LxNet.instance.request(request);
+    return HomeArticleEntity.fromJson(response['data']);
+  }
+
+  /// 公众号
+  static Future<HomeArticleEntity> getProjects(int projectId,
+      {int page = 1, int pageSize = 20}) async {
+    var request = ProjectRequest(page, projectId);
+    request.addParam("page_size", pageSize).addParam("cid", projectId);
     var response = await LxNet.instance.request(request);
     return HomeArticleEntity.fromJson(response['data']);
   }

@@ -20,7 +20,7 @@ class TagGroup extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               "$title",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ),
           Wrap(
@@ -53,19 +53,19 @@ class TagGroupItem extends StatelessWidget {
         Material(
           color:
               themeProvider.isDarkMode() ? Colors.grey[600] : Colors.grey[200],
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(14),
           child: InkWell(
             onTap: onPressed,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
             child: Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
               ),
-              height: 26,
+              height: 32,
               alignment: Alignment.center,
               child: Text(
                 "$title",
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           ),

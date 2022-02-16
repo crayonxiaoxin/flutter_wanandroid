@@ -340,6 +340,16 @@ class S {
     );
   }
 
+  /// `Projects`
+  String get top_tab_project {
+    return Intl.message(
+      'Projects',
+      name: 'top_tab_project',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Lv.{level},  Ranking: {rank}`
   String profile_level(Object level, Object rank) {
     return Intl.message(

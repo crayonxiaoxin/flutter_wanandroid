@@ -4,6 +4,7 @@ import 'package:flutter_wan_android/pages/detail_page.dart';
 import 'package:flutter_wan_android/pages/home_page.dart';
 import 'package:flutter_wan_android/pages/hotkey_page.dart';
 import 'package:flutter_wan_android/pages/login_page.dart';
+import 'package:flutter_wan_android/pages/project_page.dart';
 import 'package:flutter_wan_android/pages/query_page.dart';
 import 'package:flutter_wan_android/pages/register_page.dart';
 import 'package:flutter_wan_android/pages/tab_profile/tab_coin_page.dart';
@@ -44,6 +45,8 @@ class MyRoutePath {
 
   MyRoutePath.wxArticleList() : location = "/wx_article";
 
+  MyRoutePath.projectList() : location = "/projects";
+
   bool get isHome => location == "/";
 
   bool get isDetails => location == "/details";
@@ -65,6 +68,8 @@ class MyRoutePath {
   bool get isCoinList => location == "/profile/coin_list";
 
   bool get isWxArticleList => location == "/wx_article";
+
+  bool get isProjectList => location == "/projects";
 }
 
 /// 构建页面
@@ -97,6 +102,8 @@ MaterialPage _buildPage(MyRoutePath path, args) {
     page = const CoinPage();
   } else if (path.isWxArticleList) {
     page = WxArticlePage(publicId: args['id'], publicName: args['name']);
+  } else if (path.isProjectList) {
+    page = ProjectPage(projectId: args['id'], projectName: args['name']);
   } else {
     page = Container();
   }

@@ -95,6 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "test_native_calls":
             MessageLookupByLibrary.simpleMessage("Test Native Calls"),
         "top_tab_navi": MessageLookupByLibrary.simpleMessage("Navigation"),
+        "top_tab_project": MessageLookupByLibrary.simpleMessage("Projects"),
         "top_tab_tree": MessageLookupByLibrary.simpleMessage("Tree"),
         "top_tab_wx": MessageLookupByLibrary.simpleMessage("Official Account"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
