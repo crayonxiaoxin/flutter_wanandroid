@@ -67,6 +67,16 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// 页面切换 过渡动画
+  static const Map<TargetPlatform, PageTransitionsBuilder> _defaultBuilders =
+      <TargetPlatform, PageTransitionsBuilder>{
+    TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+    TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+    TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+    TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+  };
+
   /// 获取主题
   ThemeData getTheme({bool isDarkMode = false}) {
     var themeData = ThemeData(
@@ -90,7 +100,9 @@ class ThemeProvider extends ChangeNotifier {
             onSurface: isDarkMode ? Colors.white : LxColor.darkBg,
             onBackground: isDarkMode ? Colors.white : LxColor.darkBg,
             onError: isDarkMode ? LxColor.darkBg : Colors.white,
-            brightness: isDarkMode ? Brightness.dark : Brightness.light));
+            brightness: isDarkMode ? Brightness.dark : Brightness.light),
+        pageTransitionsTheme:
+            const PageTransitionsTheme(builders: _defaultBuilders));
     return themeData;
   }
 }
