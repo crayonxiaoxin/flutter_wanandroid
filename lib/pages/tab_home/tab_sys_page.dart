@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_navi_page.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_tree_page.dart';
+import 'package:flutter_wan_android/pages/tab_sys/tab_wechat_page.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
@@ -21,7 +22,11 @@ class _TabSysPageState extends LxState<TabSysPage>
   @override
   void initState() {
     super.initState();
-    tabs = [S.current.top_tab_tree, S.current.top_tab_navi];
+    tabs = [
+      S.current.top_tab_tree,
+      S.current.top_tab_navi,
+      S.current.top_tab_wx
+    ];
     _tabController = TabController(length: tabs.length, vsync: this);
   }
 
@@ -34,7 +39,11 @@ class _TabSysPageState extends LxState<TabSysPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    tabs = [S.of(context).top_tab_tree, S.of(context).top_tab_navi];
+    tabs = [
+      S.of(context).top_tab_tree,
+      S.of(context).top_tab_navi,
+      S.of(context).top_tab_wx
+    ];
     return Scaffold(
       appBar: ImmersiveAppBar(
         gradient: const LinearGradient(
@@ -46,7 +55,7 @@ class _TabSysPageState extends LxState<TabSysPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [TabTreePage(), TabNaviPage()],
+        children: const [TabTreePage(), TabNaviPage(), TabWechatPage()],
       ),
     );
   }

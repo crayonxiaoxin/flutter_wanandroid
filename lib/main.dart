@@ -7,6 +7,7 @@ import 'package:flutter_wan_android/provider/providers.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:intl/intl.dart';
+import 'package:lx_base/utils/run_and_catch.dart';
 import 'package:lx_cache/lx_cache.dart';
 import 'package:lx_net/lx_net.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +15,9 @@ import 'package:provider/provider.dart';
 import 'generated/l10n.dart';
 
 void main() {
-  // runSafety(MyApp());
   LxNet.preInit(interceptor: ResponseInterceptor());
-  runApp(MyApp());
+  // runApp(MyApp());
+  runSafety(MyApp());
 }
 
 class MyApp extends StatelessWidget {

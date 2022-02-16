@@ -330,6 +330,16 @@ class S {
     );
   }
 
+  /// `Official Account`
+  String get top_tab_wx {
+    return Intl.message(
+      'Official Account',
+      name: 'top_tab_wx',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Lv.{level},  Ranking: {rank}`
   String profile_level(Object level, Object rank) {
     return Intl.message(

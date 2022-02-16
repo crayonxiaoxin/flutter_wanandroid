@@ -1,7 +1,9 @@
 import 'package:flutter_wan_android/model/navi_entity.dart';
 import 'package:flutter_wan_android/model/tree_entity.dart';
+import 'package:flutter_wan_android/model/wx_public_entity.dart';
 import 'package:flutter_wan_android/net/request/navi_request.dart';
 import 'package:flutter_wan_android/net/request/tree_request.dart';
+import 'package:flutter_wan_android/net/request/wx_public_request.dart';
 import 'package:lx_net/lx_net.dart';
 
 /// 体系 & 导航
@@ -18,5 +20,12 @@ class SysDao {
     var request = NaviRequest();
     var response = await LxNet.instance.request(request);
     return NaviEntity.fromJson(response);
+  }
+
+  /// 公众号
+  static Future<WxPublicEntity> getWxPublic() async {
+    var request = WxPublicRequest();
+    var response = await LxNet.instance.request(request);
+    return WxPublicEntity.fromJson(response);
   }
 }

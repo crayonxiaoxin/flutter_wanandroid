@@ -14,6 +14,7 @@ import 'package:flutter_wan_android/model/login_entity.dart';
 import 'package:flutter_wan_android/model/navi_entity.dart';
 import 'package:flutter_wan_android/model/tree_entity.dart';
 import 'package:flutter_wan_android/model/user_info_entity.dart';
+import 'package:flutter_wan_android/model/wx_public_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -158,6 +159,12 @@ class JsonConvert {
     if (type == (UserInfoDataCoinInfo).toString()) {
       return UserInfoDataCoinInfo.fromJson(json) as M;
     }
+    if (type == (WxPublicEntity).toString()) {
+      return WxPublicEntity.fromJson(json) as M;
+    }
+    if (type == (WxPublicData).toString()) {
+      return WxPublicData.fromJson(json) as M;
+    }
 
     print("$type not found");
 
@@ -263,6 +270,15 @@ class JsonConvert {
       return data
           .map<UserInfoDataCoinInfo>((e) => UserInfoDataCoinInfo.fromJson(e))
           .toList() as M;
+    }
+    if (<WxPublicEntity>[] is M) {
+      return data
+          .map<WxPublicEntity>((e) => WxPublicEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<WxPublicData>[] is M) {
+      return data.map<WxPublicData>((e) => WxPublicData.fromJson(e)).toList()
+          as M;
     }
 
     print("${M.toString()} not found");

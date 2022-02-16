@@ -6,6 +6,7 @@ import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
+import 'package:flutter_wan_android/utils/color.dart';
 import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/utils/toast.dart';
@@ -71,6 +72,8 @@ class _DetailPageState extends LxState<DetailPage> {
           body: Stack(
             children: [
               WebView(
+                backgroundColor:
+                    themeProvider.isDarkMode() ? LxColor.darkBg : null,
                 javascriptMode: JavascriptMode.unrestricted,
                 navigationDelegate: (action) {
                   // 拦截非 http/https url

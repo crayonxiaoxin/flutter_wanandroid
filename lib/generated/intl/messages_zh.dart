@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "test_native_calls": MessageLookupByLibrary.simpleMessage("测试原生方法调用"),
         "top_tab_navi": MessageLookupByLibrary.simpleMessage("导航"),
         "top_tab_tree": MessageLookupByLibrary.simpleMessage("体系"),
+        "top_tab_wx": MessageLookupByLibrary.simpleMessage("公众号"),
         "username": MessageLookupByLibrary.simpleMessage("用户名"),
         "username_password_empty":
             MessageLookupByLibrary.simpleMessage("用户名或密码不能为空")

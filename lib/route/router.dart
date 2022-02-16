@@ -10,6 +10,7 @@ import 'package:flutter_wan_android/pages/tab_profile/tab_coin_page.dart';
 import 'package:flutter_wan_android/pages/tab_profile/tab_collect_page.dart';
 import 'package:flutter_wan_android/pages/tab_profile/tab_settings_page.dart';
 import 'package:flutter_wan_android/pages/tree_page.dart';
+import 'package:flutter_wan_android/pages/wx_article_page.dart';
 
 /// 全局 context
 final GlobalKey<NavigatorState> routerKey = GlobalKey<NavigatorState>();
@@ -41,6 +42,8 @@ class MyRoutePath {
 
   MyRoutePath.settings() : location = "/profile/settings";
 
+  MyRoutePath.wxArticleList() : location = "/wx_article";
+
   bool get isHome => location == "/";
 
   bool get isDetails => location == "/details";
@@ -60,6 +63,8 @@ class MyRoutePath {
   bool get isSettings => location == "/profile/settings";
 
   bool get isCoinList => location == "/profile/coin_list";
+
+  bool get isWxArticleList => location == "/wx_article";
 }
 
 /// 构建页面
@@ -90,6 +95,8 @@ MaterialPage _buildPage(MyRoutePath path, args) {
     page = const RegisterPage();
   } else if (path.isCoinList) {
     page = const CoinPage();
+  } else if (path.isWxArticleList) {
+    page = WxArticlePage(publicId: args['id'], publicName: args['name']);
   } else {
     page = Container();
   }

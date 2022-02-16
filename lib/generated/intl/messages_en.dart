@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Test Native Calls"),
         "top_tab_navi": MessageLookupByLibrary.simpleMessage("Navigation"),
         "top_tab_tree": MessageLookupByLibrary.simpleMessage("Tree"),
+        "top_tab_wx": MessageLookupByLibrary.simpleMessage("Official Account"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "username_password_empty": MessageLookupByLibrary.simpleMessage(
             "Username or password cannot be empty")

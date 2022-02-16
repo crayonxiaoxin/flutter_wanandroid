@@ -27,6 +27,7 @@
   "bottom_tab_profile": "Profile",
   "top_tab_tree": "Tree",
   "top_tab_navi": "Navigation",
+  "top_tab_wx": "Official Account",
   "profile_level": "Lv.{level},  Ranking: {rank}",
   "profile_coin": "My Scores",
   "profile_share": "My Share",

@@ -9,6 +9,7 @@ import 'package:flutter_wan_android/net/request/home_banner_request.dart';
 import 'package:flutter_wan_android/net/request/home_top_article_request.dart';
 import 'package:flutter_wan_android/net/request/qa_request.dart';
 import 'package:flutter_wan_android/net/request/uncollect_request.dart';
+import 'package:flutter_wan_android/net/request/wx_article_request.dart';
 import 'package:lx_net/lx_net.dart';
 
 /// 首页 & 问答
@@ -44,6 +45,15 @@ class HomeDao {
   static Future<HomeArticleEntity> getQAs(
       {int page = 1, int pageSize = 20}) async {
     var request = QaRequest(page);
+    request.addParam("page_size", pageSize);
+    var response = await LxNet.instance.request(request);
+    return HomeArticleEntity.fromJson(response['data']);
+  }
+
+  /// 公众号
+  static Future<HomeArticleEntity> getWxArticles(int publicId,
+      {int page = 1, int pageSize = 20}) async {
+    var request = WxArticleRequest(page, publicId);
     request.addParam("page_size", pageSize);
     var response = await LxNet.instance.request(request);
     return HomeArticleEntity.fromJson(response['data']);
