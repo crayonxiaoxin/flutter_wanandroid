@@ -1,18 +1,19 @@
 import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
-import 'package:flutter_wan_android/utils/color.dart';
 import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 import 'package:provider/src/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
   final DetailEntity? model;
@@ -25,11 +26,32 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends LxState<DetailPage> {
   bool loading = true;
+  final GlobalKey webViewKey = GlobalKey();
+  InAppWebViewController? _webViewController;
+  final InAppWebViewGroupOptions _webViewOptions = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+          useShouldOverrideUrlLoading: true,
+          mediaPlaybackRequiresUserGesture: false),
+      android: AndroidInAppWebViewOptions(useHybridComposition: true),
+      ios: IOSInAppWebViewOptions(allowsInlineMediaPlayback: true));
+  late PullToRefreshController _pullToRefreshController;
 
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    _pullToRefreshController = PullToRefreshController(
+        options: PullToRefreshOptions(color: Colors.blue),
+        onRefresh: () async {
+          if (!kIsWeb) {
+            if (Platform.isAndroid) {
+              _webViewController?.reload();
+            } else if (Platform.isIOS) {
+              _webViewController?.loadUrl(
+                  urlRequest:
+                      URLRequest(url: await _webViewController?.getUrl()));
+            }
+          }
+        });
   }
 
   @override
@@ -71,29 +93,53 @@ class _DetailPageState extends LxState<DetailPage> {
           ),
           body: Stack(
             children: [
-              WebView(
-                backgroundColor:
-                    themeProvider.isDarkMode() ? LxColor.darkBg : null,
-                javascriptMode: JavascriptMode.unrestricted,
-                navigationDelegate: (action) {
-                  // 拦截非 http/https url
-                  print("url => ${action.url}");
-                  if (action.url.startsWith("http")) {
-                    return NavigationDecision.navigate;
-                  }
-                  return NavigationDecision.prevent;
+              InAppWebView(
+                key: webViewKey,
+                initialUrlRequest:
+                    URLRequest(url: Uri.parse(widget.model?.url ?? "")),
+                initialOptions: _webViewOptions,
+                pullToRefreshController: _pullToRefreshController,
+                onWebViewCreated: (controller) {
+                  _webViewController = controller;
                 },
-                onPageStarted: (url) {
+                onLoadStart: (controller, url) {
                   setState(() {
                     loading = true;
                   });
                 },
-                onPageFinished: (url) {
+                onLoadStop: (controller, url) {
                   setState(() {
                     loading = false;
                   });
                 },
-                initialUrl: widget.model?.url,
+                androidOnPermissionRequest:
+                    (controller, origin, resource) async {
+                  return PermissionRequestResponse(
+                      resources: resource,
+                      action: PermissionRequestResponseAction.GRANT);
+                },
+                shouldOverrideUrlLoading: (controller, navigationAction) async {
+                  var uri = navigationAction.request.url!;
+
+                  if (![
+                    "http",
+                    "https",
+                    "file",
+                    "chrome",
+                    "data",
+                    "javascript",
+                    "about"
+                  ].contains(uri.scheme)) {
+                    if (await canLaunch(uri.toString())) {
+                      // Launch the App
+                      await launch(uri.toString());
+                      // and cancel the request
+                      return NavigationActionPolicy.CANCEL;
+                    }
+                  }
+
+                  return NavigationActionPolicy.ALLOW;
+                },
               ),
               AnimatedOpacity(
                 opacity: loading ? 1.0 : 0.0,

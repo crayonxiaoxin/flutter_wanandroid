@@ -95,7 +95,7 @@ class _ProjectItemCardState extends State<ProjectItemCard> {
                         Container(
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(parseHtml(widget.item.desc),
-                              maxLines: 6,
+                              maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 12,

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_wan_android/net/interceptor/response_interceptor.dart';
 import 'package:flutter_wan_android/provider/home_provider.dart';
@@ -14,7 +18,11 @@ import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb && Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
   LxNet.preInit(interceptor: ResponseInterceptor());
   // runApp(MyApp());
   runSafety(MyApp());
@@ -48,9 +56,11 @@ class MyApp extends StatelessWidget {
                 routerDelegate: _delegate,
                 routeInformationParser: _routeInfoParser,
               )
-            : const Scaffold(
+            : Scaffold(
                 body: Center(
-                  child: CircularProgressIndicator(), // 显示 loading
+                  child: Container(
+                    color: Colors.white,
+                  ), // 显示 loading
                 ),
               );
         return MultiProvider(

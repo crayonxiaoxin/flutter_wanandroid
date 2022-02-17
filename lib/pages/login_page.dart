@@ -17,6 +17,7 @@ class _LoginPageState extends LxState<LoginPage> {
   String _username = "";
   String _password = "";
   final FocusNode _focusNode = FocusNode();
+  bool isObscure = true;
 
   @override
   void dispose() {
@@ -103,7 +104,7 @@ class _LoginPageState extends LxState<LoginPage> {
               height: 50,
               child: TextField(
                 focusNode: _focusNode,
-                obscureText: true,
+                obscureText: isObscure,
                 keyboardType: TextInputType.visiblePassword,
                 onChanged: (value) {
                   setState(() {
@@ -115,6 +116,15 @@ class _LoginPageState extends LxState<LoginPage> {
                 },
                 decoration: InputDecoration(
                     labelText: S.of(context).password,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isObscure = !isObscure;
+                        });
+                      },
+                      child: Icon(
+                          isObscure ? Icons.visibility : Icons.visibility_off),
+                    ),
                     border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(16))),
