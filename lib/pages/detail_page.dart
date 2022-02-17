@@ -1,18 +1,14 @@
 import 'dart:io';
 
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
-import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/lx_state.dart';
-import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
-import 'package:provider/src/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
@@ -57,7 +53,6 @@ class _DetailPageState extends LxState<DetailPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var themeProvider = context.watch<ThemeProvider>();
     return WillPopScope(
         onWillPop: () async {
           MyRouterDelegate.of(context).pop(result: "test return value");
@@ -65,11 +60,7 @@ class _DetailPageState extends LxState<DetailPage> {
         },
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              FlutterClipboard.copy(
-                      "${widget.model?.title}:\n${widget.model?.url}")
-                  .then((value) => toast(S.of(context).copy_clipboard));
-            },
+            onPressed: _share,
             child: const Icon(Icons.share),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
@@ -135,10 +126,11 @@ class _DetailPageState extends LxState<DetailPage> {
                       await launch(uri.toString());
                       // and cancel the request
                       return NavigationActionPolicy.CANCEL;
+                    } else {
+                      return NavigationActionPolicy.ALLOW;
                     }
                   }
-
-                  return NavigationActionPolicy.ALLOW;
+                  return NavigationActionPolicy.CANCEL;
                 },
               ),
               AnimatedOpacity(
@@ -151,5 +143,12 @@ class _DetailPageState extends LxState<DetailPage> {
             ],
           ),
         ));
+  }
+
+  void _share() {
+    Share.share("${widget.model?.title}:\n${widget.model?.url}");
+    // FlutterClipboard.copy(
+    //         "${widget.model?.title}:\n${widget.model?.url}")
+    //     .then((value) => toast(S.of(context).copy_clipboard));
   }
 }
