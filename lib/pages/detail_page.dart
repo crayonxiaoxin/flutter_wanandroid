@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
 import 'package:flutter_wan_android/route/router.dart';
+import 'package:flutter_wan_android/utils/logger.dart';
 import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
@@ -26,11 +27,21 @@ class _DetailPageState extends LxState<DetailPage> {
   InAppWebViewController? _webViewController;
   final InAppWebViewGroupOptions _webViewOptions = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
+          useOnDownloadStart: true,
           useShouldOverrideUrlLoading: true,
           mediaPlaybackRequiresUserGesture: false),
       android: AndroidInAppWebViewOptions(useHybridComposition: true),
       ios: IOSInAppWebViewOptions(allowsInlineMediaPlayback: true));
   late PullToRefreshController _pullToRefreshController;
+  var supportedSchemes = [
+    "http",
+    "https",
+    "file",
+    "chrome",
+    "data",
+    "javascript",
+    "about"
+  ];
 
   @override
   void initState() {
@@ -109,44 +120,38 @@ class _DetailPageState extends LxState<DetailPage> {
                       resources: resource,
                       action: PermissionRequestResponseAction.GRANT);
                 },
+                onDownloadStart: (controller, uri) async {
+                  logger.i(uri);
+                  // 打开外部浏览器进行下载
+                  if (await canLaunch(uri.toString())) {
+                    await launch(uri.toString());
+                  }
+                },
                 shouldOverrideUrlLoading: (controller, navigationAction) async {
                   var uri = navigationAction.request.url!;
-
-                  if (![
-                    "http",
-                    "https",
-                    "file",
-                    "chrome",
-                    "data",
-                    "javascript",
-                    "about"
-                  ].contains(uri.scheme)) {
+                  if (!supportedSchemes.contains(uri.scheme)) {
                     if (await canLaunch(uri.toString())) {
                       // Launch the App
                       await launch(uri.toString());
-                      // and cancel the request
-                      return NavigationActionPolicy.CANCEL;
-                    } else {
-                      return NavigationActionPolicy.ALLOW;
                     }
+                    // and cancel the request
+                    return NavigationActionPolicy.CANCEL;
                   }
-                  return NavigationActionPolicy.CANCEL;
+                  return NavigationActionPolicy.ALLOW;
                 },
               ),
               AnimatedOpacity(
                 opacity: loading ? 1.0 : 0.0,
                 duration: const Duration(seconds: 1),
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                child: const Center(child: CircularProgressIndicator()),
               )
             ],
           ),
         ));
   }
 
-  void _share() {
-    Share.share("${widget.model?.title}:\n${widget.model?.url}");
+  void _share() async {
+    await Share.share("${widget.model?.title}:\n${widget.model?.url}");
     // FlutterClipboard.copy(
     //         "${widget.model?.title}:\n${widget.model?.url}")
     //     .then((value) => toast(S.of(context).copy_clipboard));
