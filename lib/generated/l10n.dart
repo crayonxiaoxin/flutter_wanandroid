@@ -370,6 +370,16 @@ class S {
     );
   }
 
+  /// `Ranking`
+  String get profile_rank {
+    return Intl.message(
+      'Ranking',
+      name: 'profile_rank',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `My Share`
   String get profile_share {
     return Intl.message(
@@ -555,6 +565,16 @@ class S {
     return Intl.message(
       'Test Native Calls',
       name: 'test_native_calls',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Blocked: try to open Taobao or JD`
+  String get detail_intercept_open_app {
+    return Intl.message(
+      'Blocked: try to open Taobao or JD',
+      name: 'detail_intercept_open_app',
       desc: '',
       args: [],
     );

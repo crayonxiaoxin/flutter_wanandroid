@@ -30,21 +30,18 @@ class _HotkeyPageState
       leading: const BackButton(color: Colors.white),
       builder: (context) {
         return Container(
-            margin: const EdgeInsets.only(left: 60, right: 16),
+            margin: const EdgeInsets.only(left: 60, right: 8),
             alignment: Alignment.center,
             child: Row(
               children: [
                 Expanded(
                   child: _buildSearchBox(context),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: InkWell(
-                    onTap: _submit,
-                    child: const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
+                IconButton(
+                  onPressed: _submit,
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
                   ),
                 )
               ],

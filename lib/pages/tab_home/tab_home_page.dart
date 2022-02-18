@@ -31,33 +31,30 @@ class _TabHomePageState
     ),
     elevation: 2.0,
     builder: (context) {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Stack(
-          children: [
-            Center(
-              child: Text(
-                S.of(context).app_name,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+      return Stack(
+        children: [
+          Center(
+            child: Text(
+              S.of(context).app_name,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
-            Positioned(
-              child: InkWell(
-                onTap: () {
-                  MyRouterDelegate.of(context).push(MyRoutePath.hotkey());
-                },
-                child: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
+          ),
+          Positioned(
+            child: IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
               ),
-              right: 0,
-              top: 0,
-              bottom: 0,
-            )
-          ],
-        ),
+              onPressed: () {
+                MyRouterDelegate.of(context).push(MyRoutePath.hotkey());
+              },
+            ),
+            right: 0,
+            top: 0,
+            bottom: 0,
+          )
+        ],
       );
     },
   );

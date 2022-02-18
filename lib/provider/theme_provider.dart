@@ -41,7 +41,7 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   /// 当前的主题模式
-  ThemeMode getThemeMode() {
+  ThemeMode getThemeMode({ThemeMode? defaultMode}) {
     String? theme = LxCache.instance.getString(Constants.themeMode);
     switch (theme) {
       case "dark":
@@ -54,7 +54,7 @@ class ThemeProvider extends ChangeNotifier {
         _themeMode = ThemeMode.system;
         break;
       default:
-        _themeMode = ThemeMode.light;
+        _themeMode = defaultMode ?? ThemeMode.light;
         break;
     }
     return _themeMode!;

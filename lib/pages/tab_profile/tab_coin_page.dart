@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/coin_list_entity.dart';
 import 'package:flutter_wan_android/net/dao/login_dao.dart';
+import 'package:flutter_wan_android/route/router.dart';
 import 'package:flutter_wan_android/utils/lx_list_state.dart';
 import 'package:flutter_wan_android/widgets/animate_int.dart';
-import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
 class CoinPage extends StatefulWidget {
@@ -58,16 +57,14 @@ class _CoinPageState
                   ),
                 ),
                 Positioned(
-                  child: InkWell(
-                    onTap: () {
-                      toast("积分排行");
-                    },
-                    child: const Icon(
-                      Icons.query_stats_outlined,
+                  child: IconButton(
+                      icon: const Icon(Icons.query_stats_outlined),
                       color: Colors.white,
-                    ),
-                  ),
-                  right: 16,
+                      onPressed: () {
+                        MyRouterDelegate.of(context)
+                            .push(MyRoutePath.rankList());
+                      }),
+                  right: 0,
                   top: 0,
                   bottom: 0,
                 ),
@@ -80,7 +77,12 @@ class _CoinPageState
             child: AnimatedCount(
               value: _coinCount,
               duration: const Duration(milliseconds: 500),
-              style: const TextStyle(fontSize: 40, color: Colors.white),
+              style: TextStyle(fontSize: 40, color: Colors.white, shadows: [
+                Shadow(
+                    color: Colors.grey.shade700,
+                    blurRadius: 3,
+                    offset: const Offset(2, 2))
+              ]),
             ),
           )),
         ],
@@ -107,29 +109,32 @@ class _CoinPageState
   }
 
   Widget _item(CoinListDatas item) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${item.reason}",
-                style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text("${item.desc}",
-                    style: const TextStyle(fontSize: 12, color: Colors.grey)),
-              ),
-            ],
-          ),
-          Text("${(item.coinCount ?? 0) > 0 ? "+" : ""}${item.coinCount}",
-              style: const TextStyle(fontSize: 14, color: Colors.blue))
-        ],
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${item.reason}",
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text("${item.desc}",
+                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                ),
+              ],
+            ),
+            Text("${(item.coinCount ?? 0) > 0 ? "+" : ""}${item.coinCount}",
+                style: const TextStyle(fontSize: 14, color: Colors.blue))
+          ],
+        ),
       ),
     );
   }

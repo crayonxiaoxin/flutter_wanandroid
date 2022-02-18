@@ -2,13 +2,16 @@ import 'package:flutter_wan_android/model/collect_entity.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/model/home_top_article_entity.dart';
+import 'package:flutter_wan_android/model/rank_entity.dart';
 import 'package:flutter_wan_android/net/request/collect_list_request.dart';
 import 'package:flutter_wan_android/net/request/collect_request.dart';
 import 'package:flutter_wan_android/net/request/home_article_request.dart';
 import 'package:flutter_wan_android/net/request/home_banner_request.dart';
 import 'package:flutter_wan_android/net/request/home_top_article_request.dart';
+import 'package:flutter_wan_android/net/request/private_share_article_request.dart';
 import 'package:flutter_wan_android/net/request/project_request.dart';
 import 'package:flutter_wan_android/net/request/qa_request.dart';
+import 'package:flutter_wan_android/net/request/rank_request.dart';
 import 'package:flutter_wan_android/net/request/uncollect_request.dart';
 import 'package:flutter_wan_android/net/request/wx_article_request.dart';
 import 'package:lx_net/lx_net.dart';
@@ -94,5 +97,23 @@ class HomeDao {
     request.addParam("page_size", pageSize);
     var response = await LxNet.instance.request(request);
     return CollectEntity.fromJson(response['data']);
+  }
+
+  /// 积分排行列表
+  static Future<RankEntity> getRankList(
+      {int page = 1, int pageSize = 30}) async {
+    var request = RankRequest(page);
+    request.addParam("page_size", pageSize);
+    var response = await LxNet.instance.request(request);
+    return RankEntity.fromJson(response['data']);
+  }
+
+  /// 自己分享的文章
+  static Future<HomeArticleEntity> getPrivateShareArticles(
+      {int page = 1, int pageSize = 20, dynamic cid}) async {
+    var request = PrivateArticleRequest(page);
+    request.addParam("page_size", pageSize);
+    var response = await LxNet.instance.request(request);
+    return HomeArticleEntity.fromJson(response['data']['shareArticles']);
   }
 }

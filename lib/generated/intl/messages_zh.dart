@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bottom_tab_tree": MessageLookupByLibrary.simpleMessage("体系"),
         "coming_soon": MessageLookupByLibrary.simpleMessage("敬请期待！"),
         "copy_clipboard": MessageLookupByLibrary.simpleMessage("已将链接复制至剪贴板"),
+        "detail_intercept_open_app":
+            MessageLookupByLibrary.simpleMessage("已拦截：尝试打开淘宝或京东"),
         "dialog_no": MessageLookupByLibrary.simpleMessage("取消"),
         "dialog_prompt": MessageLookupByLibrary.simpleMessage("提示"),
         "dialog_prompt_logout":
@@ -60,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile_level": m1,
         "profile_logout": MessageLookupByLibrary.simpleMessage("退出登录"),
         "profile_not_login": MessageLookupByLibrary.simpleMessage("未登录"),
+        "profile_rank": MessageLookupByLibrary.simpleMessage("积分排行"),
         "profile_settings": MessageLookupByLibrary.simpleMessage("系统设置"),
         "profile_share": MessageLookupByLibrary.simpleMessage("我的分享"),
         "register": MessageLookupByLibrary.simpleMessage("注册"),

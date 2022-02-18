@@ -22,6 +22,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends LxState<ProfilePage> {
   @override
+  bool get wantKeepAlive => false;
+
+  @override
   void initState() {
     super.initState();
     // LoginDao.logout();
@@ -60,12 +63,18 @@ class _ProfilePageState extends LxState<ProfilePage> {
               children: [
                 Text(
                   "${userInfo?.nickname}",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white),
+                      fontSize: 20,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                            color: Colors.grey.shade700,
+                            blurRadius: 3,
+                            offset: const Offset(2, 2))
+                      ]),
                 ),
-                const Padding(padding: EdgeInsets.only(bottom: 5)),
+                const Padding(padding: EdgeInsets.only(bottom: 8)),
                 Text(
                   S.of(context).profile_level(
                       coinInfo?.level ?? "", coinInfo?.rank ?? "0"),
@@ -113,7 +122,9 @@ class _ProfilePageState extends LxState<ProfilePage> {
             label: S.of(context).profile_share,
             icon: Icons.share,
             onTap: () {
-              toast(S.of(context).coming_soon);
+              MyRouterDelegate.of(context).push(LoginDao.isLogin
+                  ? MyRoutePath.shareList()
+                  : MyRoutePath.login());
             }),
         SettingItem(
             label: S.of(context).profile_favorite,
@@ -129,10 +140,10 @@ class _ProfilePageState extends LxState<ProfilePage> {
             onTap: () {
               MyRouterDelegate.of(context).push(MyRoutePath.settings());
             }),
-        SettingItem(
-            label: S.of(context).test_native_calls,
-            icon: Icons.code,
-            onTap: _callNative),
+        // SettingItem(
+        //     label: S.of(context).test_native_calls,
+        //     icon: Icons.code,
+        //     onTap: _callNative),
         if (LoginDao.isLogin)
           SettingItem(
               label: S.of(context).profile_logout,

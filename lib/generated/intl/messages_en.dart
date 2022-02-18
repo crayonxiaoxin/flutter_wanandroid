@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "coming_soon": MessageLookupByLibrary.simpleMessage("Coming Soon!"),
         "copy_clipboard":
             MessageLookupByLibrary.simpleMessage("Link copied to clipboard"),
+        "detail_intercept_open_app": MessageLookupByLibrary.simpleMessage(
+            "Blocked: try to open Taobao or JD"),
         "dialog_no": MessageLookupByLibrary.simpleMessage("Cancel"),
         "dialog_prompt": MessageLookupByLibrary.simpleMessage("Notice"),
         "dialog_prompt_logout": MessageLookupByLibrary.simpleMessage(
@@ -66,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile_logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "profile_not_login":
             MessageLookupByLibrary.simpleMessage("Not logged in"),
+        "profile_rank": MessageLookupByLibrary.simpleMessage("Ranking"),
         "profile_settings":
             MessageLookupByLibrary.simpleMessage("System Settings"),
         "profile_share": MessageLookupByLibrary.simpleMessage("My Share"),

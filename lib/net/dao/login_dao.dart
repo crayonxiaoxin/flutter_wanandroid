@@ -77,14 +77,18 @@ class LoginDao {
       LxCache.instance
           .setString(KEY_COIN_INFO, res.data?.coinInfo.toString() ?? "");
     }
-    return UserInfoEntity.fromJson(response);
+    return res;
   }
 
   /// 个人积分
   static Future<CoinEntity> getCoinCount() async {
     var request = CoinRequest();
     var response = await LxNet.instance.request(request);
-    return CoinEntity.fromJson(response);
+    var res = CoinEntity.fromJson(response);
+    if (res.errorCode == 0) {
+      LxCache.instance.setString(KEY_COIN_INFO, res.data?.toString() ?? "");
+    }
+    return res;
   }
 
   /// 个人积分列表

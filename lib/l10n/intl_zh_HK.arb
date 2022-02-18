@@ -31,6 +31,7 @@
   "top_tab_project": "項目",
   "profile_level": "Lv.{level},  排名: {rank}",
   "profile_coin": "我的積分",
+  "profile_rank": "積分排行",
   "profile_share": "我的分享",
   "profile_favorite": "我的收藏",
   "profile_settings": "系統設置",
@@ -49,5 +50,6 @@
   "search_box_hint": "支持多個關鍵詞，請用空格隔開",
   "searching": "正在搜索: {keyword}",
   "switch_language": "切換語言",
-  "test_native_calls": "測試原生方法調用"
+  "test_native_calls": "測試原生方法調用",
+  "detail_intercept_open_app": "已攔截：嘗試打開淘寶或京東"
 }

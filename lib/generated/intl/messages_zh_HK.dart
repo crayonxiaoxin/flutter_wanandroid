@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bottom_tab_tree": MessageLookupByLibrary.simpleMessage("體系"),
         "coming_soon": MessageLookupByLibrary.simpleMessage("敬請期待！"),
         "copy_clipboard": MessageLookupByLibrary.simpleMessage("已將鏈接複製至剪貼板"),
+        "detail_intercept_open_app":
+            MessageLookupByLibrary.simpleMessage("已攔截：嘗試打開淘寶或京東"),
         "dialog_no": MessageLookupByLibrary.simpleMessage("取消"),
         "dialog_prompt": MessageLookupByLibrary.simpleMessage("提示"),
         "dialog_prompt_logout":
@@ -60,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile_level": m1,
         "profile_logout": MessageLookupByLibrary.simpleMessage("退出登錄"),
         "profile_not_login": MessageLookupByLibrary.simpleMessage("未登錄"),
+        "profile_rank": MessageLookupByLibrary.simpleMessage("積分排行"),
         "profile_settings": MessageLookupByLibrary.simpleMessage("系統設置"),
         "profile_share": MessageLookupByLibrary.simpleMessage("我的分享"),
         "register": MessageLookupByLibrary.simpleMessage("註冊"),

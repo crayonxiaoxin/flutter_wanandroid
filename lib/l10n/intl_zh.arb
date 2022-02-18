@@ -31,6 +31,7 @@
   "top_tab_project": "项目",
   "profile_level": "Lv.{level},  排名: {rank}",
   "profile_coin": "我的积分",
+  "profile_rank": "积分排行",
   "profile_share": "我的分享",
   "profile_favorite": "我的收藏",
   "profile_settings": "系统设置",
@@ -49,5 +50,6 @@
   "search_box_hint": "支持多个关键词，请用空格隔开",
   "searching": "正在搜索: {keyword}",
   "switch_language": "切换语言",
-  "test_native_calls": "测试原生方法调用"
+  "test_native_calls": "测试原生方法调用",
+  "detail_intercept_open_app": "已拦截：尝试打开淘宝或京东"
 }

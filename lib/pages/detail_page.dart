@@ -6,11 +6,15 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_wan_android/model/detail_entity.dart';
 import 'package:flutter_wan_android/route/router.dart';
 import 'package:flutter_wan_android/utils/logger.dart';
+import 'package:flutter_wan_android/widgets/url_utils.dart';
 import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/lx_state.dart';
+import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../generated/l10n.dart';
 
 class DetailPage extends StatefulWidget {
   final DetailEntity? model;
@@ -22,6 +26,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends LxState<DetailPage> {
+  String? _title;
   bool loading = true;
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? _webViewController;
@@ -42,10 +47,12 @@ class _DetailPageState extends LxState<DetailPage> {
     "javascript",
     "about"
   ];
+  var interceptSchemes = ["tbopen", "openapp.jdmobile"];
 
   @override
   void initState() {
     super.initState();
+    _title = widget.model?.title;
     _pullToRefreshController = PullToRefreshController(
         options: PullToRefreshOptions(color: Colors.blue),
         onRefresh: () async {
@@ -71,8 +78,9 @@ class _DetailPageState extends LxState<DetailPage> {
         },
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.blue,
             onPressed: _share,
-            child: const Icon(Icons.share),
+            child: const Icon(Icons.share, color: Colors.white),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           appBar: ImmersiveAppBar(
@@ -80,18 +88,7 @@ class _DetailPageState extends LxState<DetailPage> {
                 colors: [Colors.blueAccent, Colors.lightBlueAccent]),
             elevation: 2.0,
             leading: const BackButton(color: Colors.white),
-            child: Center(
-              child: Container(
-                width: context.screenWidth * 0.7,
-                alignment: Alignment.center,
-                child: Text(
-                  "${widget.model?.title}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            child: _buildAppbar(context),
           ),
           body: Stack(
             children: [
@@ -103,6 +100,11 @@ class _DetailPageState extends LxState<DetailPage> {
                 pullToRefreshController: _pullToRefreshController,
                 onWebViewCreated: (controller) {
                   _webViewController = controller;
+                },
+                onTitleChanged: (controller, title) {
+                  setState(() {
+                    _title = title;
+                  });
                 },
                 onLoadStart: (controller, url) {
                   setState(() {
@@ -130,7 +132,10 @@ class _DetailPageState extends LxState<DetailPage> {
                 shouldOverrideUrlLoading: (controller, navigationAction) async {
                   var uri = navigationAction.request.url!;
                   if (!supportedSchemes.contains(uri.scheme)) {
-                    if (await canLaunch(uri.toString())) {
+                    // 拦截试图打开淘宝京东，例如简书
+                    if (interceptSchemes.contains(uri.scheme)) {
+                      toast(S.of(context).detail_intercept_open_app);
+                    } else if (await canLaunch(uri.toString())) {
                       // Launch the App
                       await launch(uri.toString());
                     }
@@ -148,6 +153,40 @@ class _DetailPageState extends LxState<DetailPage> {
             ],
           ),
         ));
+  }
+
+  Stack _buildAppbar(BuildContext context) {
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            width: context.screenWidth * 0.7,
+            alignment: Alignment.center,
+            child: Text(
+              "$_title",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        Positioned(
+          child: IconButton(
+            icon: const Icon(
+              Icons.public,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              launchUrl(context, widget.model?.url, inApp: false);
+            },
+          ),
+          right: 0,
+          top: 0,
+          bottom: 0,
+        )
+      ],
+    );
   }
 
   void _share() async {

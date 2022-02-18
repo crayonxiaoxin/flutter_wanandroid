@@ -31,6 +31,7 @@
   "top_tab_project": "Projects",
   "profile_level": "Lv.{level},  Ranking: {rank}",
   "profile_coin": "My Scores",
+  "profile_rank": "Ranking",
   "profile_share": "My Share",
   "profile_favorite": "My Collection",
   "profile_settings": "System Settings",
@@ -49,5 +50,6 @@
   "search_box_hint": "Separate keywords with spaces",
   "searching": "Searching: {keyword}",
   "switch_language": "Switch Language",
-  "test_native_calls": "Test Native Calls"
+  "test_native_calls": "Test Native Calls",
+  "detail_intercept_open_app": "Blocked: try to open Taobao or JD"
 }

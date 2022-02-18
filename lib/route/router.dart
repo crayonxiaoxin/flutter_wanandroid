@@ -9,7 +9,9 @@ import 'package:flutter_wan_android/pages/query_page.dart';
 import 'package:flutter_wan_android/pages/register_page.dart';
 import 'package:flutter_wan_android/pages/tab_profile/tab_coin_page.dart';
 import 'package:flutter_wan_android/pages/tab_profile/tab_collect_page.dart';
+import 'package:flutter_wan_android/pages/tab_profile/tab_rank_page.dart';
 import 'package:flutter_wan_android/pages/tab_profile/tab_settings_page.dart';
+import 'package:flutter_wan_android/pages/tab_profile/tab_share_page.dart';
 import 'package:flutter_wan_android/pages/tree_page.dart';
 import 'package:flutter_wan_android/pages/wx_article_page.dart';
 
@@ -43,9 +45,13 @@ class MyRoutePath {
 
   MyRoutePath.settings() : location = "/profile/settings";
 
+  MyRoutePath.shareList() : location = "/profile/share";
+
   MyRoutePath.wxArticleList() : location = "/wx_article";
 
   MyRoutePath.projectList() : location = "/projects";
+
+  MyRoutePath.rankList() : location = "/rank";
 
   bool get isHome => location == "/";
 
@@ -67,9 +73,13 @@ class MyRoutePath {
 
   bool get isCoinList => location == "/profile/coin_list";
 
+  bool get isShareList => location == "/profile/share";
+
   bool get isWxArticleList => location == "/wx_article";
 
   bool get isProjectList => location == "/projects";
+
+  bool get isRankList => location == "/rank";
 }
 
 /// 构建页面
@@ -100,6 +110,10 @@ MaterialPage _buildPage(MyRoutePath path, args) {
     page = const RegisterPage();
   } else if (path.isCoinList) {
     page = const CoinPage();
+  } else if (path.isRankList) {
+    page = const RankPage();
+  } else if (path.isShareList) {
+    page = const ShareListPage();
   } else if (path.isWxArticleList) {
     page = WxArticlePage(publicId: args['id'], publicName: args['name']);
   } else if (path.isProjectList) {

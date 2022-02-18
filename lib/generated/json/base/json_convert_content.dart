@@ -12,6 +12,7 @@ import 'package:flutter_wan_android/model/home_top_article_entity.dart';
 import 'package:flutter_wan_android/model/hotkey_entity.dart';
 import 'package:flutter_wan_android/model/login_entity.dart';
 import 'package:flutter_wan_android/model/navi_entity.dart';
+import 'package:flutter_wan_android/model/rank_entity.dart';
 import 'package:flutter_wan_android/model/tree_entity.dart';
 import 'package:flutter_wan_android/model/user_info_entity.dart';
 import 'package:flutter_wan_android/model/wx_public_entity.dart';
@@ -141,6 +142,12 @@ class JsonConvert {
     if (type == (NaviData).toString()) {
       return NaviData.fromJson(json) as M;
     }
+    if (type == (RankEntity).toString()) {
+      return RankEntity.fromJson(json) as M;
+    }
+    if (type == (RankDatas).toString()) {
+      return RankDatas.fromJson(json) as M;
+    }
     if (type == (TreeEntity).toString()) {
       return TreeEntity.fromJson(json) as M;
     }
@@ -245,6 +252,12 @@ class JsonConvert {
     }
     if (<NaviData>[] is M) {
       return data.map<NaviData>((e) => NaviData.fromJson(e)).toList() as M;
+    }
+    if (<RankEntity>[] is M) {
+      return data.map<RankEntity>((e) => RankEntity.fromJson(e)).toList() as M;
+    }
+    if (<RankDatas>[] is M) {
+      return data.map<RankDatas>((e) => RankDatas.fromJson(e)).toList() as M;
     }
     if (<TreeEntity>[] is M) {
       return data.map<TreeEntity>((e) => TreeEntity.fromJson(e)).toList() as M;

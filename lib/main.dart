@@ -76,7 +76,8 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: themeProvider.getTheme(),
               darkTheme: themeProvider.getTheme(isDarkMode: true),
-              themeMode: themeProvider.getThemeMode(),
+              themeMode:
+                  themeProvider.getThemeMode(defaultMode: ThemeMode.system),
               home: widget,
               debugShowCheckedModeBanner: false,
               // 国际化
