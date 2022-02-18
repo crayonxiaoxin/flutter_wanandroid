@@ -191,10 +191,11 @@ class _ProfilePageState extends LxState<ProfilePage> {
   }
 
   /// Flutter 调用 Android 原生方法
-  void _callNative() {
+  void _callNative() async {
     if (!kIsWeb && Platform.isAndroid) {
-      nativeAlert("${S.of(context).test_native_calls} AlertDialog");
-      nativeToast("${S.of(context).test_native_calls} Toast");
+      nativeAlert(
+          "${S.of(context).test_native_calls}: 可以明文 ${await nativeUseHttp()}");
+      // nativeToast("${S.of(context).test_native_calls} Toast");
     } else {
       toast("Not Implemented!");
     }

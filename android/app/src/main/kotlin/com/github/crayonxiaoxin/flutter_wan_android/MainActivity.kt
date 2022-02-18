@@ -3,6 +3,7 @@ package com.github.crayonxiaoxin.flutter_wan_android
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.security.NetworkSecurityPolicy
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import io.flutter.embedding.android.FlutterActivity
@@ -34,9 +35,17 @@ class MainActivity : FlutterActivity() {
             when (call.method) {
                 "toast" -> showToast(call, result)
                 "alert-dialog" -> showAlert(call, result)
+                "use-http" -> result.success(isCleartextTrafficPermitted())
                 else -> result.notImplemented()
             }
         }
+    }
+
+    private fun isCleartextTrafficPermitted(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return NetworkSecurityPolicy.getInstance().isCleartextTrafficPermitted
+        }
+        return true
     }
 
     private fun showAlert(call: MethodCall, result: MethodChannel.Result) {

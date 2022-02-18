@@ -18,14 +18,18 @@ import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 
-void main() async {
+void main() {
+  _initWebView();
+  LxNet.preInit(interceptor: ResponseInterceptor());
+  // runApp(MyApp());
+  runSafety(MyApp());
+}
+
+Future<void> _initWebView() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb && Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
-  LxNet.preInit(interceptor: ResponseInterceptor());
-  // runApp(MyApp());
-  runSafety(MyApp());
 }
 
 class MyApp extends StatelessWidget {

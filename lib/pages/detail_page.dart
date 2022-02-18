@@ -144,6 +144,11 @@ class _DetailPageState extends LxState<DetailPage> {
                   }
                   return NavigationActionPolicy.ALLOW;
                 },
+                onReceivedServerTrustAuthRequest:
+                    (controller, challenge) async {
+                  return ServerTrustAuthResponse(
+                      action: ServerTrustAuthResponseAction.PROCEED);
+                },
               ),
               AnimatedOpacity(
                 opacity: loading ? 1.0 : 0.0,

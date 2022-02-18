@@ -11,3 +11,7 @@ nativeToast(String message) {
 nativeAlert(String message) {
   _platform.invokeMethod("alert-dialog", {"message": message});
 }
+
+Future<bool> nativeUseHttp() async {
+  return await _platform.invokeMethod("use-http");
+}
