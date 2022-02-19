@@ -13,7 +13,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logic = Get.put(LoginLogic());
-    final state = Get.find<LoginLogic>().state;
+    // final state = Get.find<LoginLogic>().state;
+    final state = logic.state;
 
     return Scaffold(
       appBar: ImmersiveAppBar(
