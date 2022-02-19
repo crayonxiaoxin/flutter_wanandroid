@@ -4,12 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_wan_android/getx/routes.dart';
 import 'package:flutter_wan_android/net/interceptor/response_interceptor.dart';
 import 'package:flutter_wan_android/provider/home_provider.dart';
 import 'package:flutter_wan_android/provider/language_provider.dart';
 import 'package:flutter_wan_android/provider/providers.dart';
 import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/route/router.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lx_base/utils/run_and_catch.dart';
 import 'package:lx_cache/lx_cache.dart';
@@ -22,7 +24,31 @@ void main() {
   _initWebView();
   LxNet.preInit(interceptor: ResponseInterceptor());
   // runApp(MyApp());
-  runSafety(MyApp());
+  // runSafety(MyApp());
+  runSafety(App());
+}
+
+class App extends StatelessWidget with AppPages {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      initialRoute: Routes.Home,
+      getPages: AppPages.pages,
+      // 国际化
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      onGenerateTitle: (context) {
+        return S.of(context).app_name;
+      },
+    );
+  }
 }
 
 Future<void> _initWebView() async {
