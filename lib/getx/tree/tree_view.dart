@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/getx/abs_list/lx_page.dart';
 import 'package:flutter_wan_android/getx/navi/navi_view.dart';
+import 'package:flutter_wan_android/getx/projects/projects_view.dart';
 import 'package:flutter_wan_android/getx/tixi/tixi_view.dart';
-import 'package:flutter_wan_android/pages/tab_sys/tab_project_page.dart';
-import 'package:flutter_wan_android/pages/tab_sys/tab_wechat_page.dart';
+import 'package:flutter_wan_android/getx/wx_public/wx_public_view.dart';
 import 'package:get/get.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
@@ -30,8 +30,8 @@ class TreePage extends StatelessWidget {
         children: [
           LxPage(TixiPage()),
           LxPage(NaviPage()),
-          TabWechatPage(),
-          TabProjectPage()
+          LxPage(WxPublicPage()),
+          LxPage(ProjectsPage())
         ],
       ),
     );
