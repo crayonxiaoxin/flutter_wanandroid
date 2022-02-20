@@ -25,7 +25,7 @@ void main() {
   LxNet.preInit(interceptor: ResponseInterceptor());
   // runApp(MyApp());
   // runSafety(MyApp());
-  runSafety(App());
+  runSafety(const App());
 }
 
 class App extends StatelessWidget with AppPages {

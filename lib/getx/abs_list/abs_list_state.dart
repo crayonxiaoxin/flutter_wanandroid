@@ -1,4 +1,5 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class AbsListState<Model> {
   late RxList<Model> dataList;
@@ -6,6 +7,8 @@ class AbsListState<Model> {
 
   /// 是否加载完成
   late RxBool isLoadAll;
+
+  RefreshController refreshController = RefreshController(initialRefresh: true);
 
   AbsListState() {
     dataList = <Model>[].obs;

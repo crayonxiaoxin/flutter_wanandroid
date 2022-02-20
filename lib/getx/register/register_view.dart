@@ -12,13 +12,13 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logic = Get.put(RegisterLogic());
-    final state = Get.find<RegisterLogic>().state;
+    final state = logic.state;
 
     return Scaffold(
       appBar: ImmersiveAppBar(
         leading: const BackButton(color: Colors.white),
         gradient: const LinearGradient(
-          colors: [Colors.lightBlueAccent, Colors.blueAccent],
+          colors: [Colors.blueAccent, Colors.lightBlueAccent],
         ),
         elevation: 2,
         child: Container(

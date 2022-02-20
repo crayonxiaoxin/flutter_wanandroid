@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
+import 'package:flutter_wan_android/utils/logger.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'abs_list_logic.dart';
 
 abstract class AbsListPage<Logic extends AbsListLogic> extends StatelessWidget {
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+  const AbsListPage({Key? key, required this.logic}) : super(key: key);
 
-  AbsListPage({Key? key}) : super(key: key);
-
-  Logic get logic;
+  final Logic logic;
 
   get state => logic.state;
 
-  // 使用这个可以使用 setState
   PreferredSizeWidget? buildAppBar(BuildContext context) => null;
 
   Widget buildChild(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
-    // final logic = Get.put<Logic>(logic());
+    // final logic = Get.put<Logic>();
     // final AbsListState state = Get.find<Logic>().state;
     var widget = Obx(() {
       return SmartRefresher(
-        controller: _refreshController,
+        controller: state.refreshController,
         onLoading: onLoading,
         onRefresh: () {
           onLoading(isLoadMore: false);
@@ -61,15 +58,16 @@ abstract class AbsListPage<Logic extends AbsListLogic> extends StatelessWidget {
     logic.onLoading(
         isLoadMore: isLoadMore,
         onComplete: () {
-          _refreshController.loadComplete();
-          _refreshController.refreshCompleted();
+          logger.w("completed ${state.dataList}");
+          state.refreshController.loadComplete();
+          state.refreshController.refreshCompleted();
         },
         onFailed: () {
-          _refreshController.loadFailed();
-          _refreshController.refreshFailed();
+          state.refreshController.loadFailed();
+          state.refreshController.refreshFailed();
         },
         onNoData: () {
-          _refreshController.loadNoData();
+          state.refreshController.loadNoData();
         });
   }
 }

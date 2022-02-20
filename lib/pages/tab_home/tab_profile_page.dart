@@ -42,7 +42,7 @@ class _ProfilePageState extends LxState<ProfilePage> {
       extendBodyBehindAppBar: true,
       appBar: ImmersiveAppBar(
         gradient: const LinearGradient(
-          colors: [Colors.lightBlueAccent, Colors.blueAccent],
+          colors: [Colors.blueAccent, Colors.lightBlueAccent],
         ),
         elevation: 2,
         height: 160,

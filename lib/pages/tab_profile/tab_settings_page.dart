@@ -85,7 +85,7 @@ class _SettingsPageState extends LxState<SettingsPage> {
   _appBar() {
     return ImmersiveAppBar(
       gradient: const LinearGradient(
-        colors: [Colors.lightBlueAccent, Colors.blueAccent],
+        colors: [Colors.blueAccent, Colors.lightBlueAccent],
       ),
       elevation: 2,
       leading: const BackButton(color: Colors.white),

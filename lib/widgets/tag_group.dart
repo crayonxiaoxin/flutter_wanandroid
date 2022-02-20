@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wan_android/provider/theme_provider.dart';
-import 'package:provider/src/provider.dart';
 
 class TagGroup extends StatelessWidget {
   final String? title;
@@ -46,13 +44,14 @@ class TagGroupItem extends StatelessWidget {
   }
 
   _tag(BuildContext context) {
-    var themeProvider = context.watch<ThemeProvider>();
+    // var themeProvider = context.watch<ThemeProvider>();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Material(
-          color:
-              themeProvider.isDarkMode() ? Colors.grey[600] : Colors.grey[200],
+          // color:
+          //     themeProvider.isDarkMode() ? Colors.grey[600] : Colors.grey[200],
+          color: Colors.grey[200],
           borderRadius: BorderRadius.circular(14),
           child: InkWell(
             onTap: onPressed,

@@ -32,7 +32,7 @@ class _LoginPageState extends LxState<LoginPage> {
       appBar: ImmersiveAppBar(
         leading: const BackButton(color: Colors.white),
         gradient: const LinearGradient(
-          colors: [Colors.lightBlueAccent, Colors.blueAccent],
+          colors: [Colors.blueAccent, Colors.lightBlueAccent],
         ),
         elevation: 2,
         child: Container(

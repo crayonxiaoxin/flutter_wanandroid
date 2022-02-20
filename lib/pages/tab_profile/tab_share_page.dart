@@ -19,7 +19,7 @@ class _ShareListPageState
   @override
   var appBar = ImmersiveAppBar(
     gradient: const LinearGradient(
-      colors: [Colors.lightBlueAccent, Colors.blueAccent],
+      colors: [Colors.blueAccent, Colors.lightBlueAccent],
     ),
     elevation: 2,
     leading: const BackButton(color: Colors.white),

@@ -33,7 +33,7 @@ class _CoinPageState
   PreferredSizeWidget? buildAppBar(BuildContext context) {
     return ImmersiveAppBar(
       gradient: const LinearGradient(
-        colors: [Colors.lightBlueAccent, Colors.blueAccent],
+        colors: [Colors.blueAccent, Colors.lightBlueAccent],
       ),
       elevation: 2,
       height: 160,

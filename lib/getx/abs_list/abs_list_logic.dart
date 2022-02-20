@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/utils/logger.dart';
 import 'package:get/get.dart';
 
 import 'abs_list_state.dart';
 
 abstract class AbsListLogic<Model, State extends AbsListState>
     extends GetxController {
-  State get state;
+  final State state;
+
+  AbsListLogic(this.state);
 
   @mustCallSuper
   void onLoading(
@@ -21,16 +24,14 @@ abstract class AbsListLogic<Model, State extends AbsListState>
     if (state.isLoadAll.value) return;
     try {
       var list = await getList(state.currentPage.value, state.pageSize);
-      onComplete?.call();
       if (state.currentPage.value == 1) {
-        if (!state.isLoadInitClear) {
-          state.dataList.addAll(list);
-        } else {
-          state.dataList.value = list;
+        if (state.isLoadInitClear) {
+          state.dataList.clear();
         }
-      } else {
-        state.dataList.addAll(list);
       }
+      // state.dataList.addAll(list);
+      state.dataList.value += list;
+      logger.e("222 ${state.runtimeType} ${state.dataList} ${list.length}");
       if (list.isEmpty) {
         state.isLoadAll.value = true;
         onNoData?.call();
@@ -39,6 +40,7 @@ abstract class AbsListLogic<Model, State extends AbsListState>
         onNoData?.call();
       } else {
         state.currentPage++;
+        onComplete?.call();
       }
     } catch (e) {
       print("load error => $e");

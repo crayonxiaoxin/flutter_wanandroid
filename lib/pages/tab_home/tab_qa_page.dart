@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
@@ -19,7 +18,7 @@ class _TabQaPageState
   @override
   var appBar = ImmersiveAppBar(
     gradient: const LinearGradient(
-      colors: [Colors.lightBlueAccent, Colors.blueAccent],
+      colors: [Colors.blueAccent, Colors.lightBlueAccent],
     ),
     elevation: 2,
     child: Container(

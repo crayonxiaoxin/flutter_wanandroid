@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/getx/abs_list/abs_list_logic.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
@@ -7,8 +6,7 @@ import 'package:flutter_wan_android/net/dao/home_dao.dart';
 import 'home_state.dart';
 
 class HomeLogic extends AbsListLogic<HomeArticleDatas, HomeState> {
-  @override
-  final HomeState state = HomeState();
+  HomeLogic() : super(HomeState());
 
   @override
   Future<List<HomeArticleDatas>> getList(int pageIndex, int pageSize) async {

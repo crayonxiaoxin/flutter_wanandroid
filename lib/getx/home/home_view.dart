@@ -4,14 +4,15 @@ import 'package:flutter_wan_android/getx/abs_list/abs_list_view.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/widgets/article_item_card.dart';
 import 'package:flutter_wan_android/widgets/home_banner.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:lx_base/widget/adaptive_container.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
 import 'home_logic.dart';
 
 class HomePage extends AbsListPage<HomeLogic> {
-  HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key, logic: Get.put(HomeLogic()));
 
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {
@@ -67,9 +68,6 @@ class HomePage extends AbsListPage<HomeLogic> {
           );
         });
   }
-
-  @override
-  HomeLogic get logic => Get.put(HomeLogic());
 
   _banners(List<HomeBannerData> banners) {
     return Padding(
