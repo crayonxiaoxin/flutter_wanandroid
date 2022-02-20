@@ -3,8 +3,8 @@ import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/getx/abs_list/lx_page.dart';
 import 'package:flutter_wan_android/getx/home/home_view.dart';
 import 'package:flutter_wan_android/getx/qa/qa_view.dart';
+import 'package:flutter_wan_android/getx/tree/tree_view.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
-import 'package:flutter_wan_android/pages/tab_home/tab_sys_page.dart';
 import 'package:get/get.dart';
 
 import 'main_logic.dart';
@@ -28,7 +28,7 @@ class MainPage extends StatelessWidget {
         children: [
           LxPage(HomePage()),
           LxPage(QaPage()),
-          TabSysPage(),
+          LxPage(TreePage()),
           ProfilePage()
         ],
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
-import 'package:flutter_wan_android/getx/tixi/tixi_view.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_navi_page.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_project_page.dart';
+import 'package:flutter_wan_android/pages/tab_sys/tab_tree_page.dart';
 import 'package:flutter_wan_android/pages/tab_sys/tab_wechat_page.dart';
 import 'package:lx_base/lx_state.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
@@ -58,9 +58,8 @@ class _TabSysPageState extends LxState<TabSysPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          TixiPage(),
-          // TabTreePage(),
+        children: const [
+          TabTreePage(),
           TabNaviPage(),
           TabWechatPage(),
           TabProjectPage()

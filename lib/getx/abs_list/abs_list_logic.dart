@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wan_android/utils/logger.dart';
 import 'package:get/get.dart';
 
 import 'abs_list_state.dart';
@@ -31,7 +30,6 @@ abstract class AbsListLogic<Model, State extends AbsListState>
       }
       // state.dataList.addAll(list);
       state.dataList.value += list;
-      logger.e("222 ${state.runtimeType} ${state.dataList} ${list.length}");
       if (list.isEmpty) {
         state.isLoadAll.value = true;
         onNoData?.call();

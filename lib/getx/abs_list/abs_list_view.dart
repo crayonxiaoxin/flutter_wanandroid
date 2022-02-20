@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
-import 'package:flutter_wan_android/utils/logger.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -58,7 +57,6 @@ abstract class AbsListPage<Logic extends AbsListLogic> extends StatelessWidget {
     logic.onLoading(
         isLoadMore: isLoadMore,
         onComplete: () {
-          logger.w("completed ${state.dataList}");
           state.refreshController.loadComplete();
           state.refreshController.refreshCompleted();
         },
