@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
+import 'package:flutter_wan_android/getx/abs_list/lx_page.dart';
 import 'package:flutter_wan_android/getx/home/home_view.dart';
 import 'package:flutter_wan_android/getx/qa/qa_view.dart';
 import 'package:flutter_wan_android/pages/tab_home/tab_profile_page.dart';
@@ -24,7 +25,12 @@ class MainPage extends StatelessWidget {
         onPageChanged: (index) {
           state.currentIndex.value = index;
         },
-        children: [HomePage(), QaPage(), TabSysPage(), ProfilePage()],
+        children: [
+          LxPage(HomePage()),
+          LxPage(QaPage()),
+          TabSysPage(),
+          ProfilePage()
+        ],
       ),
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(

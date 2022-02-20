@@ -36,6 +36,9 @@ class App extends StatelessWidget with AppPages {
     return GetMaterialApp(
       initialRoute: Routes.Home,
       getPages: AppPages.pages,
+      defaultTransition: Transition.cupertino,
+      transitionDuration: Get.defaultTransitionDuration,
+      debugShowCheckedModeBanner: false,
       // 国际化
       localizationsDelegates: const [
         S.delegate,
