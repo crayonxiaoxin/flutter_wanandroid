@@ -7,6 +7,7 @@ import 'package:flutter_wan_android/getx/project_list/project_list_view.dart';
 import 'package:flutter_wan_android/getx/query/query_view.dart';
 import 'package:flutter_wan_android/getx/ranking/ranking_view.dart';
 import 'package:flutter_wan_android/getx/register/register_view.dart';
+import 'package:flutter_wan_android/getx/settings/settings_view.dart';
 import 'package:flutter_wan_android/getx/share_list/share_list_view.dart';
 import 'package:flutter_wan_android/getx/tixi_tabs/tixi_tabs_view.dart';
 import 'package:flutter_wan_android/getx/wx_articles/wx_articles_view.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const String Ranking = "/ranking";
   static const String ShareList = "/share_list";
   static const String CollectList = "/collect_list";
+  static const String Settings = "/settings";
 }
 
 abstract class AppPages {
@@ -46,5 +48,6 @@ abstract class AppPages {
     GetPage(name: Routes.Ranking, page: () => LxPage(RankingPage())),
     GetPage(name: Routes.ShareList, page: () => LxPage(ShareListPage())),
     GetPage(name: Routes.CollectList, page: () => LxPage(CollectListPage())),
+    GetPage(name: Routes.Settings, page: () => LxPage(SettingsPage())),
   ];
 }

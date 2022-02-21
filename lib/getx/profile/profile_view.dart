@@ -122,7 +122,7 @@ class ProfilePage extends StatelessWidget {
             label: S.of(context).profile_settings,
             icon: Icons.settings,
             onTap: () {
-              // MyRouterDelegate.of(context).push(MyRoutePath.settings());
+              Get.toNamed(Routes.Settings);
             }),
         // SettingItem(
         //     label: S.of(context).test_native_calls,
