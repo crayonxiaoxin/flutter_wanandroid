@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/getx/abs_list/abs_list_view.dart';
+import 'package:flutter_wan_android/getx/routes.dart';
 import 'package:flutter_wan_android/model/wx_public_entity.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,8 @@ class WxPublicPage extends AbsListPage<WxPublicLogic> {
   _buildItem(BuildContext context, WxPublicData item) {
     return InkWell(
       onTap: () {
+        Get.toNamed(Routes.WxArticles,
+            arguments: {"id": item.id ?? 0, "name": item.name ?? ""});
         // MyRouterDelegate.of(context).push(MyRoutePath.wxArticleList(),
         //     args: {"id": item.id ?? 0, "name": item.name ?? ""});
       },

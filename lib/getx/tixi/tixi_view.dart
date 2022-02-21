@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/getx/abs_list/abs_list_view.dart';
+import 'package:flutter_wan_android/getx/routes.dart';
 import 'package:flutter_wan_android/model/tree_entity.dart';
 import 'package:flutter_wan_android/widgets/tag_group.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,8 @@ class TixiPage extends AbsListPage<TixiLogic> {
         return TagGroupItem(
           "${e.name}",
           onPressed: () {
+            Get.toNamed(Routes.TixiTabs,
+                arguments: {"index": children.indexOf(e), "item": item});
             // MyRouterDelegate.of(context).push(
             //     MyRoutePath.trees(extra: children.indexOf(e)),
             //     args: item);

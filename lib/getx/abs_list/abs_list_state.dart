@@ -8,9 +8,10 @@ class AbsListState<Model> {
   /// 是否加载完成
   late RxBool isLoadAll;
 
-  RefreshController refreshController = RefreshController(initialRefresh: true);
+  late RefreshController refreshController;
 
   AbsListState() {
+    refreshController = RefreshController(initialRefresh: true);
     dataList = <Model>[].obs;
     currentPage = 1.obs;
     isLoadAll = false.obs;

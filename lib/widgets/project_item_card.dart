@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/model/home_article_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';
-import 'package:flutter_wan_android/provider/theme_provider.dart';
 import 'package:flutter_wan_android/widgets/url_utils.dart';
 import 'package:lx_base/utils/html_utils.dart';
 import 'package:lx_base/utils/string_utils.dart';
 import 'package:lx_base/utils/toast.dart';
 import 'package:lx_base/widget/adaptive_container.dart';
 import 'package:lx_base/widget/cached_image.dart';
-import 'package:provider/src/provider.dart';
 
 class ProjectItemCard extends StatefulWidget {
   final HomeArticleDatas item;
@@ -41,11 +39,12 @@ class _ProjectItemCardState extends State<ProjectItemCard> {
   }
 
   Widget _articleItem(BuildContext context) {
-    var themeProvider = context.watch<ThemeProvider>();
+    // var themeProvider = context.watch<ThemeProvider>();
     return Container(
-      margin: const EdgeInsets.only(left: 8, right: 8, bottom: 0),
+      margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
       child: Material(
-        color: themeProvider.isDarkMode() ? null : Colors.white,
+        // color: themeProvider.isDarkMode() ? null : Colors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         shadowColor: Colors.grey[50],
         elevation: 0.2,

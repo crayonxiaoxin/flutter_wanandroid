@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/getx/abs_list/abs_list_view.dart';
+import 'package:flutter_wan_android/getx/routes.dart';
 import 'package:flutter_wan_android/model/tree_entity.dart';
 import 'package:flutter_wan_android/widgets/tag_group.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,8 @@ class ProjectsPage extends AbsListPage<ProjectsLogic> {
             return TagGroupItem(
               "${e.name}",
               onPressed: () {
+                Get.toNamed(Routes.ProjectList,
+                    arguments: {"id": e.id, "name": e.name});
                 // MyRouterDelegate.of(context).push(MyRoutePath.projectList(),
                 //     args: {"id": e.id, "name": e.name});
               },

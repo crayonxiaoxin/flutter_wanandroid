@@ -3,6 +3,7 @@ import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/getx/abs_list/abs_list_view.dart';
 import 'package:flutter_wan_android/widgets/search_box.dart';
 import 'package:flutter_wan_android/widgets/tag_group.dart';
+import 'package:get/get.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
 import 'hot_key_logic.dart';
@@ -31,10 +32,7 @@ class HotKeyPage extends AbsListPage<HotKeyLogic> {
                   onPressed: () {
                     logic.submit();
                   },
-                  icon: const Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.search, color: Colors.white),
                 )
               ],
             ));
@@ -60,19 +58,22 @@ class HotKeyPage extends AbsListPage<HotKeyLogic> {
   }
 
   _buildSearchBox(BuildContext context) {
-    return SearchBox(
-      hintText: S.of(context).search_box_hint,
-      textEditingController: state.textEditingController,
-      autofocus: true,
-      onSubmitted: (value) {
-        logic.submit();
-      },
-      onChanged: (value) {
-        // setState(() {});
-      },
-      onClear: () {
-        logic.clear();
-      },
-    );
+    return Obx(() {
+      return SearchBox(
+        hintText: S.of(context).search_box_hint,
+        textEditingController: state.textEditingController,
+        autofocus: true,
+        showClearIcon: state.keyword.value.isNotEmpty,
+        onSubmitted: (value) {
+          logic.submit();
+        },
+        onChanged: (value) {
+          state.keyword.value = value;
+        },
+        onClear: () {
+          logic.clear();
+        },
+      );
+    });
   }
 }

@@ -56,16 +56,19 @@ class QueryPage extends AbsListPage<QueryLogic> {
   }
 
   _buildSearchBox(BuildContext context) {
-    return SearchBox(
-      hintText: S.of(context).search_box_hint,
-      textEditingController: state.textEditingController,
-      onSubmitted: (value) {
-        logic.submit();
-      },
-      onChanged: (value) {
-        // setState(() {});
-      },
-      onClear: () => logic.clear(),
-    );
+    return Obx(() {
+      return SearchBox(
+        hintText: S.of(context).search_box_hint,
+        textEditingController: state.textEditingController,
+        showClearIcon: state.keyword.value.isNotEmpty,
+        onSubmitted: (value) {
+          logic.submit();
+        },
+        onChanged: (value) {
+          state.keyword.value = value;
+        },
+        onClear: () => logic.clear(),
+      );
+    });
   }
 }

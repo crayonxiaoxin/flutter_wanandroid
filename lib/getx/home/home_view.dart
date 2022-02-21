@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/getx/abs_list/abs_list_view.dart';
+import 'package:flutter_wan_android/getx/routes.dart';
 import 'package:flutter_wan_android/model/home_banner_entity.dart';
 import 'package:flutter_wan_android/widgets/article_item_card.dart';
 import 'package:flutter_wan_android/widgets/home_banner.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:lx_base/widget/adaptive_container.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
@@ -36,6 +37,7 @@ class HomePage extends AbsListPage<HomeLogic> {
                 icon: const Icon(Icons.search, color: Colors.white),
                 onPressed: () {
                   // MyRouterDelegate.of(context).push(MyRoutePath.hotkey());
+                  Get.toNamed(Routes.HotKey);
                 },
               ),
               right: 0,

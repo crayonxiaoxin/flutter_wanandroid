@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_wan_android/generated/l10n.dart';
 import 'package:flutter_wan_android/model/rank_entity.dart';
 import 'package:flutter_wan_android/net/dao/home_dao.dart';

@@ -10,6 +10,7 @@ class SearchBox extends StatelessWidget {
   final double fontSize;
   final String hintText;
   final bool autofocus;
+  final bool showClearIcon;
 
   const SearchBox(
       {Key? key,
@@ -21,7 +22,8 @@ class SearchBox extends StatelessWidget {
       this.decoration,
       this.fontSize = 14,
       this.hintText = "支持多个关键词，请用空格隔开",
-      this.autofocus = false})
+      this.autofocus = false,
+      this.showClearIcon = false})
       : super(key: key);
 
   @override
@@ -47,11 +49,12 @@ class SearchBox extends StatelessWidget {
         style: TextStyle(fontSize: fontSize, color: Colors.black87),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-            isCollapsed: false,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            isCollapsed: true,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             hintText: hintText,
             hintStyle: TextStyle(fontSize: fontSize, color: Colors.grey),
-            suffixIcon: (textEditingController?.text.isNotEmpty ?? false)
+            suffixIcon: showClearIcon
                 ? InkWell(
                     onTap: onClear,
                     child: const Icon(
