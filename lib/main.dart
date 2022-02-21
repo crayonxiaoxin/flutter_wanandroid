@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_wan_android/getx/routes.dart';
+import 'package:flutter_wan_android/getx/settings/settings_logic.dart';
 import 'package:flutter_wan_android/net/interceptor/response_interceptor.dart';
 import 'package:flutter_wan_android/provider/home_provider.dart';
 import 'package:flutter_wan_android/provider/language_provider.dart';
@@ -33,6 +34,8 @@ class App extends StatelessWidget with AppPages {
 
   @override
   Widget build(BuildContext context) {
+    var settingsLogic = Get.put(SettingsLogic());
+    settingsLogic.setTheme(settingsLogic.getThemeMode());
     return GetMaterialApp(
       initialRoute: Routes.Home,
       getPages: AppPages.pages,
@@ -40,6 +43,7 @@ class App extends StatelessWidget with AppPages {
       transitionDuration: Get.defaultTransitionDuration,
       debugShowCheckedModeBanner: false,
       // 国际化
+      locale: settingsLogic.currentLocale(),
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
