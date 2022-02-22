@@ -29,7 +29,7 @@ class MainPage extends StatelessWidget {
           LxPage(HomePage()),
           LxPage(QaPage()),
           LxPage(TreePage()),
-          LxPage(ProfilePage())
+          ProfilePage()
         ],
       ),
       bottomNavigationBar: Obx(() {

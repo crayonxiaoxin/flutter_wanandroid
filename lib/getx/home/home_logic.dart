@@ -21,8 +21,8 @@ class HomeLogic extends AbsListLogic<HomeArticleDatas, HomeState> {
       VoidCallback? onFailed,
       VoidCallback? onNoData}) async {
     if (!isLoadMore) {
-      var canShowBanners = true;
-      var canShowTopArticles = true;
+      var canShowBanners = state.settingsState.showHomeBanner.value;
+      var canShowTopArticles = state.settingsState.showHomeTopArticles.value;
       if (canShowBanners) {
         loadBanners();
       }

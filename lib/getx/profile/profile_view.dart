@@ -21,6 +21,9 @@ class ProfilePage extends StatelessWidget {
     state.isLogin.value = LoginDao.isLogin;
     var userInfo = LoginDao.userInfo();
     var coinInfo = LoginDao.coinInfo();
+    if (LoginDao.isLogin) {
+      logic.loadUserInfo();
+    }
     return Obx(() {
       return Scaffold(
         extendBodyBehindAppBar: true,

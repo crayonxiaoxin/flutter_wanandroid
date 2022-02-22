@@ -7,6 +7,7 @@ import 'package:flutter_wan_android/widgets/article_item_card.dart';
 import 'package:flutter_wan_android/widgets/home_banner.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:lx_base/adaptive.dart';
 import 'package:lx_base/widget/adaptive_container.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
@@ -23,30 +24,39 @@ class HomePage extends AbsListPage<HomeLogic> {
       ),
       elevation: 2.0,
       builder: (context) {
-        return Stack(
-          children: [
-            Center(
-              child: Text(
-                S.of(context).app_name,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Positioned(
-              child: IconButton(
-                icon: const Icon(Icons.search, color: Colors.white),
-                onPressed: () {
-                  // MyRouterDelegate.of(context).push(MyRoutePath.hotkey());
-                  Get.toNamed(Routes.HotKey);
-                },
-              ),
-              right: 0,
-              top: 0,
-              bottom: 0,
-            )
-          ],
-        );
+        return _buildAppbarContent(context);
       },
+    );
+  }
+
+  Stack _buildAppbarContent(BuildContext context) {
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            width: context.screenWidth * 0.7,
+            alignment: Alignment.center,
+            child: Text(
+              S.of(context).app_name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        Positioned(
+          child: IconButton(
+            icon: const Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              Get.toNamed(Routes.HotKey);
+            },
+          ),
+          right: 0,
+          top: 0,
+          bottom: 0,
+        )
+      ],
     );
   }
 

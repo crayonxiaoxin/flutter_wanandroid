@@ -125,10 +125,7 @@ class DetailPage extends StatelessWidget {
           ),
           Positioned(
             child: IconButton(
-              icon: const Icon(
-                Icons.public,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.public, color: Colors.white),
               onPressed: () {
                 logic.openBrowser(context);
               },

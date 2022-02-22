@@ -9,14 +9,15 @@ import '../../widgets/setting_item.dart';
 import 'settings_logic.dart';
 
 class SettingsPage extends StatelessWidget {
-  final logic = Get.put(SettingsLogic());
+  // final logic = Get.put(SettingsLogic());
+  final logic = Get.find<SettingsLogic>();
   final state = Get.find<SettingsLogic>().state;
 
   SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var _currentLanguage = logic.currentLanguageString();
+    var _currentLanguage = logic.currentLanguageFormat();
     if (_currentLanguage == "system") {
       _currentLanguage = S.of(context).settings_follow_system;
     }
@@ -30,7 +31,6 @@ class SettingsPage extends StatelessWidget {
               value: state.isFollowSystem.value,
               desc: S.of(context).settings_follow_system_desc,
               onChanged: (value) {
-                state.isFollowSystem.value = value;
                 if (value) {
                   logic.setTheme(ThemeMode.system);
                 } else {
@@ -43,7 +43,6 @@ class SettingsPage extends StatelessWidget {
               value: state.isDarkMode.value,
               disabled: state.isFollowSystem.value,
               onChanged: (value) {
-                state.isDarkMode.value = value;
                 if (value) {
                   logic.setTheme(ThemeMode.dark);
                 } else {
