@@ -25,6 +25,8 @@ class HomeLogic extends AbsListLogic<HomeArticleDatas, HomeState> {
       var canShowTopArticles = state.settingsState.showHomeTopArticles.value;
       if (canShowBanners) {
         loadBanners();
+      } else {
+        state.banners.clear();
       }
       if (canShowTopArticles) {
         loadTopArticles();

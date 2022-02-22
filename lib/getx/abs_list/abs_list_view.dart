@@ -19,8 +19,6 @@ abstract class AbsListPage<Logic extends AbsListLogic> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final logic = Get.put<Logic>();
-    // final AbsListState state = Get.find<Logic>().state;
     var widget = Obx(() {
       return SmartRefresher(
         controller: state.refreshController,

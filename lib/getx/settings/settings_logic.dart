@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/getx/home/home_logic.dart';
 import 'package:get/get.dart';
 import 'package:lx_cache/lx_cache.dart';
 
 import '../../constants.dart';
 import 'settings_state.dart';
 
-class SettingsLogic extends GetxController with WidgetsBindingObserver {
+class SettingsLogic extends FullLifeCycleController {
   final SettingsState state = SettingsState();
 
   @override
@@ -99,11 +100,15 @@ class SettingsLogic extends GetxController with WidgetsBindingObserver {
   void showBanner({bool show = true}) {
     LxCache.instance.setBool(Constants.showHomeBanner, show);
     state.showHomeBanner.value = show;
+    var homeLogic = Get.find<HomeLogic>();
+    homeLogic.onLoading(isLoadMore: false);
   }
 
   void showTopArticles({bool show = true}) {
     LxCache.instance.setBool(Constants.showHomeTopArticles, show);
     state.showHomeTopArticles.value = show;
+    var homeLogic = Get.find<HomeLogic>();
+    homeLogic.onLoading(isLoadMore: false);
   }
 
   /// 是否显示首页 banner

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'abs_list_state.dart';
 
 abstract class AbsListLogic<Model, State extends AbsListState>
-    extends GetxController {
+    extends FullLifeCycleController {
   final State state;
 
   AbsListLogic(this.state);
