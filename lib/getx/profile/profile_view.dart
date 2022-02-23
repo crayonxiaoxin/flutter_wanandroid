@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/getx/routes.dart';
 import 'package:get/get.dart';
+import 'package:lx_base/utils/string_utils.dart';
 import 'package:lx_base/widget/immersive_app_bar.dart';
 
 import '../../generated/l10n.dart';
@@ -92,7 +93,7 @@ class ProfilePage extends StatelessWidget {
       children: [
         SettingItem(
             label: S.of(context).profile_coin,
-            desc: "${userInfo?.coinCount}",
+            desc: formatIfNull(userInfo?.coinCount),
             icon: Icons.school_outlined,
             onTap: () {
               if (state.isLogin.value) {

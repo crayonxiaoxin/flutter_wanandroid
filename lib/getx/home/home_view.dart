@@ -83,7 +83,7 @@ class HomePage extends AbsListPage<HomeLogic> {
 
   _banners(List<HomeBannerData> banners) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
+      padding: const EdgeInsets.only(bottom: 10, left: 2, right: 2),
       child: AdaptiveContainer(
         builder: (h) {
           return HomeBanner(

@@ -49,7 +49,7 @@ class SearchBox extends StatelessWidget {
         style: TextStyle(fontSize: fontSize, color: Colors.black87),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-            isCollapsed: true,
+            isCollapsed: false,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             hintText: hintText,
