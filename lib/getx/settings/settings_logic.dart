@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_wan_android/getx/home/home_logic.dart';
 import 'package:get/get.dart';
+import 'package:lx_base/utils/toast.dart';
 import 'package:lx_cache/lx_cache.dart';
 
 import '../../constants.dart';
@@ -28,12 +31,32 @@ class SettingsLogic extends FullLifeCycleController {
     /// 初始化
     setTheme(_getThemeMode());
     setLanguage(_currentLanguage());
+
+    // _enableNativeEventTest();
+  }
+
+  static const EventChannel _eventChannel =
+      EventChannel(Constants.eventChannel);
+  StreamSubscription? _streamSubscription;
+
+  void _enableNativeEventTest() {
+    _streamSubscription =
+        _eventChannel.receiveBroadcastStream(["test"]).listen((event) {
+      // 监听到回调，toast
+      toast(event);
+    });
+  }
+
+  void _disableNativeEventTest() {
+    _streamSubscription?.cancel();
+    _streamSubscription = null;
   }
 
   @override
   onClose() {
-    super.onClose();
     WidgetsBinding.instance?.removeObserver(this);
+    // _disableNativeEventTest();
+    super.onClose();
   }
 
   /// 系统 dark mode 发生变化

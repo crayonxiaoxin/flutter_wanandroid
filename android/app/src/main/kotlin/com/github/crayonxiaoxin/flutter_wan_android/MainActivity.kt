@@ -8,11 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.*
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.github.crayonxiaoxin/flutter_wan_android"
+    private val methodChannel = "com.github.crayonxiaoxin/method_channel"
+    private val eventChannel = "com.github.crayonxiaoxin/event_channel"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -28,9 +31,10 @@ class MainActivity : FlutterActivity() {
 
     // Flutter 调用 Android 原生方法
     private fun callAndroid(flutterEngine: FlutterEngine) {
+        // 只能回调一次
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            CHANNEL
+            methodChannel
         ).setMethodCallHandler { call, result ->
             when (call.method) {
                 "toast" -> showToast(call, result)
@@ -39,6 +43,26 @@ class MainActivity : FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+
+        // 可以回调多次
+        var eventJob: Job? = null
+        EventChannel(flutterEngine.dartExecutor.binaryMessenger, eventChannel)
+            .setStreamHandler(object : EventChannel.StreamHandler {
+                override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                    // 参数列表
+                    val args = arguments as? ArrayList<*>
+                    eventJob = CoroutineScope(Dispatchers.Main).launch {
+                        for (i in 0 until 3) {
+                            events?.success("event ${args?.get(0)} $i")
+                            delay(2000)
+                        }
+                    }
+                }
+
+                override fun onCancel(arguments: Any?) {
+                    eventJob?.cancel()
+                }
+            })
     }
 
     private fun isCleartextTrafficPermitted(): Boolean {
