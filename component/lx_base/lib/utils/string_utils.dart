@@ -11,6 +11,6 @@ String formatIfNull(value, {String defaultValue = ""}) {
   if (value == null || value == "null") {
     return defaultValue;
   } else {
-    return value;
+    return value.toString();
   }
 }
